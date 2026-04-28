@@ -1,0 +1,40 @@
+## Experiment 2 — Listpack/Ziplist Threshold Sweep: Metrics
+
+Workload: 5,000 hashes, each with 100 fields. Field name 8 B, value ≈ 12 B.
+Per-hash entry count is fixed at 100 — so the only thing that changes between
+runs is whether 100 entries falls below the configured `hash-max-ziplist-entries`
+threshold. This is the single regime change we want to measure.
+
+NB: Redis 6.2 directive name is `hash-max-ziplist-entries` — same semantics as
+Redis 7's `hash-max-listpack-entries`.
+
+| Threshold | Encoding   | used_memory | RSS    | RDB size  | SAVE (min, ms) | HGET p50 (µs) | HGET p99 (µs) |
+|-----------|-----------|-------------|--------|-----------|----------------|---------------|---------------|
+|        32 | hashtable | 43.52 MB    | 56.9 MB| 11.55 MB  |  99.5          |  88.6         | 383.2         |
+|        64 | hashtable | 43.45 MB    | 56.7 MB| 11.55 MB  |  99.1          | 266.2         | 508.7         |
+|       128 | ziplist   | 13.96 MB    | 17.1 MB|  4.71 MB  |  29.0          | 108.1         | 580.6         |
+|       256 | ziplist   | 13.96 MB    | 17.3 MB|  4.71 MB  |  35.7          | 100.6         | 460.5         |
+|       512 | ziplist   | 13.96 MB    | 17.0 MB|  4.71 MB  |  32.5          |  94.4         | 514.0         |
+
+### Deltas vs threshold=128 (baseline / Redis default)
+
+| Metric        | t=32       | t=64       | t=128 (base) | t=256      | t=512      |
+|---------------|------------|------------|--------------|------------|------------|
+| used_memory   | +211.7 %   | +211.1 %   |     0 %      |   +0.0 %   |   +0.0 %   |
+| RSS           | +232.4 %   | +231.4 %   |     0 %      |   +1.2 %   |   -0.7 %   |
+| RDB size      | +145.3 %   | +145.3 %   |     0 %      |   +0.0 %   |   +0.0 %   |
+| SAVE wall     | +243.4 %   | +241.7 %   |     0 %      |  +23.1 %   |  +12.1 %   |
+| HGET p50      |  -18.0 %   | +146.2 %   |     0 %      |   -6.9 %   |  -12.7 %   |
+
+### Key observations
+
+1. The encoding regime change happens between threshold = 64 and 128, exactly
+   as predicted (each hash has 100 entries → packs at ≥ 128, falls back to
+   hashtable at < 128).
+2. At hashtable encoding, memory ≈ 3.1× larger and RDB ≈ 2.5× larger.
+3. SAVE is dominated by *what's serialised*: hashtable encoding produces a
+   larger payload, so the save itself is ~3× longer wall-clock.
+4. HGET latency is *not* monotonic with threshold. p50 swings between 88–266 µs
+   without a clear linear trend — see analysis.md for why.
+5. Beyond 128, all of memory, RSS, RDB size, and SAVE time plateau. There is
+   no further benefit to raising the threshold once the dataset already packs.

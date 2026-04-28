@@ -1,0 +1,50 @@
+{
+  "everysec": {
+    "mode": "everysec",
+    "n_workers": 16,
+    "duration_s": 5.0,
+    "total_ops": 44138,
+    "throughput_ops_s": 8823.7,
+    "latency_ms_p50": 1.435,
+    "latency_ms_p95": 4.493,
+    "latency_ms_p99": 6.528,
+    "latency_ms_max": 25.192,
+    "rss_peak_kb": 13448,
+    "aof_current_size": 5957440,
+    "aof_groupcommit_fsyncs": 0,
+    "aof_groupcommit_byte_triggers": 0,
+    "aof_delayed_fsync": 0
+  },
+  "always": {
+    "mode": "always",
+    "n_workers": 16,
+    "duration_s": 5.0,
+    "total_ops": 12044,
+    "throughput_ops_s": 2406.8,
+    "latency_ms_p50": 7.006,
+    "latency_ms_p95": 10.025,
+    "latency_ms_p99": 11.872,
+    "latency_ms_max": 35.984,
+    "rss_peak_kb": 7652,
+    "aof_current_size": 1616662,
+    "aof_groupcommit_fsyncs": 0,
+    "aof_groupcommit_byte_triggers": 0,
+    "aof_delayed_fsync": 0
+  },
+  "groupcommit": {
+    "mode": "groupcommit",
+    "n_workers": 16,
+    "duration_s": 5.0,
+    "total_ops": 41592,
+    "throughput_ops_s": 8314.9,
+    "latency_ms_p50": 1.497,
+    "latency_ms_p95": 4.87,
+    "latency_ms_p99": 7.038,
+    "latency_ms_max": 23.049,
+    "rss_peak_kb": 12872,
+    "aof_current_size": 5612696,
+    "aof_groupcommit_fsyncs": 251,
+    "aof_groupcommit_byte_triggers": 0,
+    "aof_delayed_fsync": 0
+  }
+}

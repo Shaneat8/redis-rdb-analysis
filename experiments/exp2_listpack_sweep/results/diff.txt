@@ -1,0 +1,37 @@
+## Experiment 2 — Behaviour / Encoding Diff
+
+The regime change between threshold=64 and threshold=128 is the only
+qualitative difference; the other steps are flat plateaus.
+
+### OBJECT ENCODING h:0 across runs
+
+  threshold=32   → hashtable
+  threshold=64   → hashtable
+  threshold=128  → ziplist     ← regime change here
+  threshold=256  → ziplist
+  threshold=512  → ziplist
+
+### What changes structurally
+
+  hashtable encoding:
+    - Each hash is a real `dict` (open-addressed hash table).
+    - Per-entry overhead: dictEntry struct (3 pointers ≈ 24 B on x86_64) +
+      sds header for field + sds header for value + bucket pointer.
+    - Memory cost dominated by the hash table itself, not the data.
+
+  ziplist (= listpack in 7.x) encoding:
+    - Each hash is a single contiguous byte buffer with length-prefixed
+      field/value pairs back-to-back.
+    - Per-entry overhead: ~2–6 bytes of length prefix; no pointers, no
+      allocator overhead.
+    - Field lookup is O(N) linear scan — but N is bounded by the
+      threshold, so it stays cache-friendly.
+
+### Save-path behavioural diff
+
+Hashtable encoding writes each field+value with full object framing in
+RDB; ziplist encoding writes the entire packed buffer as a single
+length-prefixed blob (RDB type code OBJ_ENCODING_LISTPACK_EX in 7.x,
+or OBJ_HASH_ZIPLIST in 6.2). Hence the ~2.5× RDB size delta and the
+~3× SAVE wall-clock delta — fewer per-field syscalls and less
+metadata to emit on the packed path.

@@ -1,0 +1,27 @@
+--- /tmp/redis_build/redislite-6.2.912183/redis.submodule/src/rdb.c	2023-10-18 07:43:10.000000000 +0000
++++ /tmp/exp1_only/src/rdb.c	2026-04-28 15:11:58.424956445 +0000
+@@ -2714,10 +2714,22 @@
+         uint64_t cksum, expected = rdb->cksum;
+ 
+         if (rioRead(rdb,&cksum,8) == 0) goto eoferr;
++        memrev64ifbe(&cksum);
++        /* === EXP1 PATCH: structural EOF check runs regardless of
++         * whether per-file CRC validation is enabled. After the 8-byte
++         * trailer there must be NO more bytes. */
++        {
++            char extra;
++            size_t trailing = rioRead(rdb, &extra, 1);
++            if (trailing != 0) {
++                serverLog(LL_WARNING, "EXP1: RDB structural error — trailing bytes present after EOF+cksum trailer (file corrupt).");
++                rdbReportCorruptRDB("EXP1 structural error after EOF");
++                return C_ERR;
++            }
++        }
+         if (server.rdb_checksum && !server.skip_checksum_validation) {
+-            memrev64ifbe(&cksum);
+             if (cksum == 0) {
+-                serverLog(LL_WARNING,"RDB file was saved with checksum disabled: no check performed.");
++                serverLog(LL_WARNING,"RDB file was saved with checksum disabled: no CRC check performed (structural EOF verified).");
+             } else if (cksum != expected) {
+                 serverLog(LL_WARNING,"Wrong RDB checksum expected: (%llx) but "
+                     "got (%llx). Aborting now.",

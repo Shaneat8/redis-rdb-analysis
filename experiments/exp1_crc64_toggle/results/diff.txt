@@ -1,0 +1,44 @@
+## Experiment 1 — Log / Behaviour Diff
+
+### File-format diff (last 16 bytes of dump.rdb)
+
+  baseline (rdbchecksum yes):
+    01788ec7: 4c46 4c4d 4457 68ff f954 0002 87c8 2b9a   LFLMDWh..T....+.
+
+  modified (rdbchecksum no):
+    01788ec7: 4b55 7148 7856 4dff 0000 0000 0000 0000   KUqHxVM.........
+
+  → The trailing 8 bytes are a real CRC64 in the baseline (`f954 0002 87c8 2b9a`)
+    and all-zeros in the modified file. Redis interprets a zero trailer as
+    "no checksum present" on load and skips verification, which is why
+    a corrupted RDB still loaded silently in the modified run.
+
+### Server-log diff (corruption trial)
+
+  baseline server.log (CRC ON, after flipping byte at offset 12,339,051):
+    * Loading RDB produced by version 6.2.14
+    * RDB memory usage when created 39.07 Mb
+    # Wrong RDB checksum expected: (d242b02f31788bb2) but got (9a2bc887020054f9). Aborting now.
+    # Internal error in RDB reading offset 23068637, function at rdb.c:2726 -> RDB CRC error
+  → Server refuses to start. No client can connect. Process exits non-zero.
+
+  modified server.log (CRC OFF, same byte flipped):
+    * Loading RDB produced by version 6.2.14
+    * RDB memory usage when created 39.07 Mb
+    # Done loading RDB, keys loaded: 200000, keys expired: 0.
+    * DB loaded from disk: 0.113 seconds
+    * Ready to accept connections
+  → Server starts cleanly with no warning. The corrupted byte sits in
+    a value somewhere in the dataset — Redis happily serves whatever ends
+    up in memory.
+
+### Behaviour diff (corruption trial)
+
+  baseline:    PING → "Connection refused"   DBSIZE → "Connection refused"
+  modified:    PING → PONG                  DBSIZE → 200000
+
+### Save-path diff
+
+  No observable difference in the runtime save log lines themselves. CRC64
+  is a streaming hash updated in-line as bytes are written to the rio sink,
+  so it doesn't add new log events — only its presence/absence at EOF.

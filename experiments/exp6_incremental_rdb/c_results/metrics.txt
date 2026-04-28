@@ -1,0 +1,14 @@
+Experiment 6 - Incremental RDB - metrics (median of 3 runs)
+==================================================================
+binary               redis-server.modified
+workload             200000 keys x 256B values
+runs/scenario        3
+
+dirty%  n_mod      n_del      full_ms    incr_ms    speedup    full_KB    incr_KB   
+------------------------------------------------------------------
+1       1900       100        252        25         10.1x      6527       63        
+10      19000      1000       262        53         4.9x       6498       631       
+50      95000      5000       250        215        1.2x       6367       3158      
+
+Headline: incremental save cost scales with dirty count, not dataset size.
+Numbers are MEDIAN across 3 runs to suppress single-shot variance.

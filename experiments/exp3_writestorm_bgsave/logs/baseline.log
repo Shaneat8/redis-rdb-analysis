@@ -1,0 +1,35 @@
+LOADED 300000 used_memory= 119.44M
+RSS_PRE=138436608
+Background saving started
+STORM_DURATION=7.3435s
+PING_SAMPLES=333
+PING_P50_MS=5.723
+PING_P95_MS=14.585
+PING_P99_MS=16.766
+PING_MAX_MS=22.712
+RDB_BGSAVE_TIME_SEC=1
+RDB_LAST_COW_SIZE=4673536
+RSS_POST=224288768
+USED_MEMORY_POST=205287872
+rdb_bgsave_in_progress:0
+rdb_last_save_time:1777134403
+rdb_last_bgsave_status:ok
+rdb_last_bgsave_time_sec:1
+rdb_current_bgsave_time_sec:-1
+rdb_last_cow_size:4673536
+-rw-r--r-- 1 tender-festive-rubin tender-festive-rubin 99597280 Apr 25 16:26 /tmp/exp3_baseline/dump.rdb
+--- server.log tail ---
+10:C 25 Apr 2026 16:26:31.485 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+10:C 25 Apr 2026 16:26:31.486 # Redis version=6.2.14, bits=64, commit=40305114, modified=0, pid=10, just started
+10:C 25 Apr 2026 16:26:31.486 # Configuration loaded
+10:M 25 Apr 2026 16:26:31.486 * monotonic clock: POSIX clock_gettime
+10:M 25 Apr 2026 16:26:31.486 * Running mode=standalone, port=17201.
+10:M 25 Apr 2026 16:26:31.486 # Server initialized
+10:M 25 Apr 2026 16:26:31.486 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+10:M 25 Apr 2026 16:26:31.487 * Ready to accept connections
+10:M 25 Apr 2026 16:26:42.512 * Background saving started by pid 21
+21:C 25 Apr 2026 16:26:43.611 * DB saved on disk
+21:C 25 Apr 2026 16:26:43.612 * RDB: 4 MB of memory used by copy-on-write
+10:M 25 Apr 2026 16:26:43.692 * Background saving terminated with success
+10:M 25 Apr 2026 16:26:50.045 # User requested shutdown...
+10:M 25 Apr 2026 16:26:50.045 # Redis is now ready to exit, bye bye...

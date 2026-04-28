@@ -1,0 +1,59 @@
+Behavioral differences across the three modes
+==============================================
+
+1. Where the fsync happens
+   - everysec : Redis bio-thread, once per second, transparent to client
+   - always   : Redis main thread, BEFORE the SET reply is sent
+   - sgc      : Client-side flusher thread, every <=5 ms OR when
+                buffer >= 64 KB; client RPC blocks on a per-record Event
+
+2. How many fsyncs per write
+   - everysec : ~1 fsync per second total, regardless of write rate
+   - always   : 1 fsync per write
+   - sgc      : 1 fsync per ~5–11 critical writes under load
+                (degenerates to 1 per write only if writes are isolated
+                in time, which is the cold-path / single-thread case)
+
+3. Worst-case data lost on power failure (critical writes only)
+   - everysec : up to 1 second of acked writes (740 in our 3 s burst)
+   - always   : 0
+   - sgc      : 0 (every ACK is post-fsync by construction)
+
+4. Latency profile under concurrency (16 writers)
+   - everysec : SET p50 ≈ 3.4 ms (network + redis main loop only)
+   - always   : SET p50 ≈ 9.0 ms (every reply waits for fsync)
+   - sgc      : non-critical SET p50 ≈ 1.4 ms (lower than everysec
+                because the redis instance is doing less work — the
+                workload is partly absorbed by the WAL path)
+                critical SET p50 ≈ 12.7 ms (≈ flush window + fsync +
+                pipeline apply; this is the price of bounded RPO)
+
+5. Disk I/O pattern
+   - everysec : large sequential writes to the AOF file
+   - always   : small writes followed immediately by fsync
+   - sgc      : large sequential writes to TWO files: AOF (everysec)
+                and the sidecar WAL (group-committed). Because the
+                fsync is on the WAL only, the AOF buffer is never
+                blocked and the redis main loop stays fast.
+
+6. Recovery
+   - everysec : Redis loads AOF on restart; up to 1 s of writes lost
+   - always   : Redis loads AOF on restart; nothing lost beyond
+                possibly the most recent in-flight reply
+   - sgc      : Redis loads AOF (may be missing some critical writes);
+                then SgcClient.replay() reads the sidecar WAL,
+                reads __sgc:applied_seq, and reapplies any missing
+                records idempotently. Recovery is bounded by WAL size,
+                not Redis dataset size.
+
+7. Failure mode coverage
+   - everysec / always cover crashes of Redis itself
+   - sgc additionally covers the client-process crashing AFTER the WAL
+     append but BEFORE Redis acked. On restart, replay() rolls forward
+     even if Redis already had the value (idempotent).
+
+8. Where the cost lives
+   - everysec : nowhere visible at p50; risk hidden in RPO
+   - always   : 9 ms p50 added to EVERY write (including non-critical)
+   - sgc      : 12.7 ms p50 added ONLY to writes the user marked
+                critical; 70% of traffic stays on the fast path

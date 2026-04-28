@@ -1,0 +1,16 @@
+loaded 200000
+used_memory:40962552
+used_memory_human:39.06M
+used_memory_rss:50610176
+used_memory_rss_human:48.27M
+SAVE_TIME_TRIAL_1=.297720636
+SAVE_TIME_TRIAL_2=.275405397
+SAVE_TIME_TRIAL_3=.293263382
+-rw-r--r-- 1 tender-festive-rubin tender-festive-rubin 24678103 Apr 25 16:20 /tmp/exp1_baseline/dump.rdb
+rdb_changes_since_last_save:0
+rdb_bgsave_in_progress:0
+rdb_last_save_time:1777134041
+rdb_last_bgsave_status:ok
+rdb_last_bgsave_time_sec:-1
+rdb_current_bgsave_time_sec:-1
+rdb_last_cow_size:0

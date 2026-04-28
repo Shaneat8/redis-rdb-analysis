@@ -1,0 +1,22 @@
+[modified] tail of dump.rdb (last 16 bytes hex):
+01788ec7: 4b55 7148 7856 4dff 0000 0000 0000 0000  KUqHxVM.........
+[modified] flipped byte at offset 12339051: 6a -> 55
+[modified] PING=PONG  DBSIZE=200000
+[modified] server.log tail:
+37:C 25 Apr 2026 16:21:07.734 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+37:C 25 Apr 2026 16:21:07.734 # Redis version=6.2.14, bits=64, commit=40305114, modified=0, pid=37, just started
+37:C 25 Apr 2026 16:21:07.734 # Configuration loaded
+37:M 25 Apr 2026 16:21:07.735 * monotonic clock: POSIX clock_gettime
+37:M 25 Apr 2026 16:21:07.735 * Running mode=standalone, port=17002.
+37:M 25 Apr 2026 16:21:07.735 # Server initialized
+37:M 25 Apr 2026 16:21:07.735 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+37:M 25 Apr 2026 16:21:07.735 * Loading RDB produced by version 6.2.14
+37:M 25 Apr 2026 16:21:07.735 * RDB age 19 seconds
+37:M 25 Apr 2026 16:21:07.735 * RDB memory usage when created 39.07 Mb
+37:M 25 Apr 2026 16:21:07.848 # Done loading RDB, keys loaded: 200000, keys expired: 0.
+37:M 25 Apr 2026 16:21:07.848 * DB loaded from disk: 0.113 seconds
+37:M 25 Apr 2026 16:21:07.848 * Ready to accept connections
+37:M 25 Apr 2026 16:21:09.235 # User requested shutdown...
+37:M 25 Apr 2026 16:21:09.235 # Redis is now ready to exit, bye bye...
+[modified] console log tail:
+===

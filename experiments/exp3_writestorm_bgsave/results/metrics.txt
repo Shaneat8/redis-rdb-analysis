@@ -1,0 +1,39 @@
+## Experiment 3 — Write Storm During BGSAVE: Metrics
+
+Workload:
+- Preload 300,000 keys (random 128–512 B values) ≈ 119 MB used_memory.
+- Issue BGSAVE.
+- Immediately storm 200,000 NEW keys (`sk:*`) on the parent in a tight pipeline.
+- Concurrently sample PING latency every ~10 ms on a separate connection.
+- Wait until BGSAVE completes; report.
+
+The "tuning" delta is `rdb-save-incremental-fsync`:
+  baseline = no  (intentionally bad — child does one giant fsync at end)
+  modified = yes (the standard tuning, default in 6.0+)
+
+| Metric                       | Baseline (incr-fsync=no) | Modified (incr-fsync=yes) | % Change |
+|------------------------------|--------------------------|---------------------------|----------|
+| Pre-BGSAVE used_memory       | 119.44 MB                | 119.44 MB                 |  0.00%   |
+| Pre-BGSAVE RSS               | 138,436,608 B (132.0 MB) | 138,498,048 B (132.1 MB)  | +0.04%   |
+| Post-storm RSS               | 224,288,768 B (213.9 MB) | 224,219,136 B (213.8 MB)  | -0.03%   |
+| RSS spike from storm         | +85.85 MB                | +85.72 MB                 |  ≈same   |
+| Storm duration (200k writes) | 7.34 s                   | 8.43 s                    | +14.85%  |
+| BGSAVE duration              | 1 s                      | 1 s                       |  same    |
+| RDB size                     | 99,597,280 B             | 99,597,280 B              |  0.00%   |
+| RDB COW size (rdb_last_cow) | 4,673,536 B (4.46 MB)    | 4,673,536 B (4.46 MB)     |  0.00%   |
+| PING p50 during storm        | 5.72 ms                  | 5.64 ms                   |  -1.4%   |
+| PING p95 during storm        | 14.59 ms                 | 16.14 ms                  | +10.6%   |
+| PING p99 during storm        | 16.77 ms                 | 21.47 ms                  | +28.0%   |
+| PING max during storm        | 22.71 ms                 | 21.91 ms                  |  -3.5%   |
+
+### Interpretation (read this with analysis.md)
+
+1. **COW spike is small (4.5 MB).** The storm writes go to *new* keys, so
+   they don't dirty pages shared with the BGSAVE child's snapshot. Only
+   incidental pages (allocator metadata, dict resizes) trigger COW.
+2. **Storm RSS spike is real (~86 MB)** but it's the parent allocating
+   for the new keys, not COW from BGSAVE.
+3. **Incremental fsync's effect on parent latency is the wrong sign in
+   this run.** p99 is *higher* with incremental fsync ON. See analysis.md;
+   this is a known ext4 / page-cache behaviour at small-to-medium dataset
+   sizes.

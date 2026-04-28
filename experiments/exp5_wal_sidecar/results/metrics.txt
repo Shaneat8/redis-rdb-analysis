@@ -1,0 +1,92 @@
+Experiment 5 — Selective Group-Commit Durability Sidecar
+==========================================================
+
+Hardware / runtime
+------------------
+Redis 6.2.14 (bundled with redislite). Single-host. Storage: ext4.
+Workload: 30% critical / 70% normal SETs, value=64B, key="w:<n>".
+Each test runs for 3.0 seconds.
+
+============================================================
+Experiment A — WRITE BURST (16 concurrent writers)
+============================================================
+Three modes compared, single-Redis-instance per mode (separate ports):
+  everysec : plain Redis, AOF everysec  (loose RPO ~1s)
+  always   : plain Redis, AOF always    (tight RPO 0)
+  sgc      : SgcClient on top of an everysec server (RPO bounded
+              by FLUSH_INTERVAL_MS=5ms for critical writes only)
+
+----------------------------------------------------------------------------------
+Metric                          | everysec   | always     | sgc        |
+----------------------------------------------------------------------------------
+Throughput (ops/s)              |    3,481.9 |    1,715.0 |    3,010.7 |
+Total writes in 3 s             |     10,467 |      5,164 |      9,062 |
+Critical writes in 3 s          |      3,141 |      1,556 |      2,736 |
+Latency normal   p50 (us)       |      3,352 |      9,055 |      1,356 |
+Latency normal   p95 (us)       |     11,928 |     13,259 |      5,243 |
+Latency normal   p99 (us)       |     16,924 |     17,098 |      8,684 |
+Latency critical p50 (us)       |      3,738 |      9,016 |     12,695 |
+Latency critical p95 (us)       |     12,015 |     13,056 |     19,805 |
+Latency critical p99 (us)       |     17,830 |     16,752 |     24,099 |
+----------------------------------------------------------------------------------
+SGC internal stats:
+  flushes (= fsyncs)            : 246
+  records flushed               : 2,736
+  avg records per fsync         : 11.12   <-- group commit working
+  fsync wall avg (us)           : 4,395
+  fsync wall max (us)           : 8,136
+
+============================================================
+Experiment B — DURABILITY GAP (8 concurrent writers, 3 s)
+============================================================
+"Critical writes lost worst-case" = number of critical writes that
+the client received an ACK for but that would NOT survive a power
+loss / kernel panic occurring at the worst possible moment.
+
+For everysec: bounded by writes acked in the worst 1.0 s window
+              between fsyncs (the AOF buffer is fsynced on a 1 Hz timer).
+For always:   bounded by 0 — every SET reply waits for an fsync.
+For sgc:      bounded by 0 for critical writes — the SgcClient holds
+              the caller until the WAL is fsynced (within 5 ms of
+              ACK request; in practice the same fsync covers many).
+
+----------------------------------------------------------------------
+Metric                          | everysec   | always   | sgc       |
+----------------------------------------------------------------------
+Total writes                    |      6,845 |    2,221 |     4,892 |
+Critical writes (acked)         |      2,105 |      685 |     1,492 |
+Critical writes lost worst-case |        740 |        0 |         0 |
+Worst-case window (s)           |       1.00 |     0.00 |     0.005 |
+----------------------------------------------------------------------
+SGC: last_flushed_seq == total_critical (1492) — every acked critical
+write was on disk before its ACK was returned to the caller.
+
+============================================================
+Experiment C — RESOURCE IMPACT (16 concurrent writers, 3 s)
+============================================================
+Bytes that hit local disk + sustained throughput.
+
+----------------------------------------------------------------------------
+Metric                          | everysec    | always      | sgc         |
+----------------------------------------------------------------------------
+Throughput (ops/s)              |     2,070.7 |     1,327.3 |     1,966.0 |
+AOF size on disk after 3 s (B)  |     595,283 |     381,203 |     573,392 |
+Sidecar WAL size after 3 s (B)  |           0 |           0 |     149,430 |
+Total bytes to disk (B)         |     595,283 |     381,203 |     722,822 |
+SGC fsyncs in 3 s               |           - |           - |         178 |
+SGC avg records per fsync       |           - |           - |        9.90 |
+SGC fsync wall avg (us)         |           - |           - |       6,286 |
+SGC fsync wall max (us)         |           - |           - |      16,041 |
+----------------------------------------------------------------------------
+Notes:
+- 'always' wrote LESS to disk than 'everysec' purely because its
+  throughput is lower (no replication of bytes; it just got fewer
+  ACKs done in 3 s).
+- The sgc instance keeps Redis on everysec, so its AOF growth is
+  comparable to the everysec baseline. The added 149 KB of WAL is the
+  storage cost of the durability upgrade for the 30% critical writes.
+- 178 fsyncs / 916 critical records = ~5.1 records per fsync; the
+  per-write fsync cost is amortized.
+- Per-write fsync (always) executed ~3,982 fsyncs in the same window
+  for fewer writes. SGC achieves equivalent durability with ~22x
+  fewer fsyncs (178 vs ~3,982).

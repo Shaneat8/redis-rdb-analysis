@@ -1,0 +1,72 @@
+================================================================
+EXP 5 (v2) — In-tree adaptive group-commit AOF
+Modified Redis 6.2.14 + new appendfsync mode `groupcommit`
+Defaults: aof-groupcommit-window-ms=20, aof-groupcommit-max-bytes=65536
+================================================================
+
+EXPERIMENT 1 — Crash durability (kill -9 after 2.0s of writes)
+================================================================
+Method: write as fast as one client can, then SIGKILL the process group.
+Restart, replay AOF, count surviving keys. Also report theoretical
+worst-case loss window in ms (the operator-relevant metric).
+
+Metric                            | everysec     | always      | groupcommit  | Change vs everysec
+----------------------------------|--------------|-------------|--------------|---------------------
+Writes acked before kill          | 18,237       | 536         | 6,046        | (groupcommit -> 33%)
+AOF size at kill (bytes)          | 2,133,752    | 62,735      | 707,405      |
+AOF size on disk after kill       | 2,133,752    | 62,735      | 707,405      | identical (page cache)
+Lost writes after restart         | 0            | 0           | 0            | (ext4 journal preserves)
+Theoretical max loss window (ms)  | 1,000        | 0           | 20           | 50x tighter
+Theoretical max lost writes       | 9,118        | 0           | 60           | 152x fewer
+
+Note: zero observed losses in all modes is a kernel artifact (ext4 data=ordered
+flushes the journal). The theoretical-window column is the *true* operator
+exposure: in a power-loss event (page cache wiped), everysec loses up to 1s
+of writes; groupcommit caps loss at the configured 20ms window.
+
+
+EXPERIMENT 2 — High write load (16 concurrent writers, 5s, 100B values)
+================================================================
+Metric            | everysec  | always    | groupcommit | groupcommit vs everysec | groupcommit vs always
+------------------|-----------|-----------|-------------|--------------------------|------------------------
+Throughput ops/s  | 8,824     | 2,407     | 8,315       | -5.8% (within noise)    | +245% (3.45x)
+Total ops         | 44,138    | 12,044    | 41,592      |                          |
+Latency p50 (ms)  | 1.435     | 7.006     | 1.497       | +4% (effectively equal) | -78.6% (4.7x lower)
+Latency p95 (ms)  | 4.493     | 10.025    | 4.870       | +8%                     | -51%
+Latency p99 (ms)  | 6.528     | 11.872    | 7.038       | +8%                     | -41%
+Latency max (ms)  | 25.192    | 35.984    | 23.049      | -9% (better)            | -36%
+RSS peak (kB)     | 13,448    | 7,652     | 12,872      | -4%                     | +68%
+fsyncs scheduled  | 5         | 12,044    | 251         | 50x more than everysec  | 48x fewer than always
+Loss window (ms)  | 1,000     | 0         | 20          | 50x tighter             | only 20ms penalty
+
+
+EXPERIMENT 3 — Resource impact (8 concurrent writers, 5s)
+================================================================
+Metric                   | everysec  | always    | groupcommit | Notes
+-------------------------|-----------|-----------|-------------|-------
+Throughput ops/s         | 8,086     | 1,515     | 7,786       |
+Total ops                | 40,442    | 7,580     | 38,937      |
+CPU user (s)             | 0.170     | 0.180     | 0.310       |
+CPU system (s)           | 0.470     | 0.060     | 0.360       |
+CPU total (s)            | 0.640     | 0.240     | 0.670       | similar to everysec
+CPU per 1k ops (ms)      | 15.83     | 31.66     | 17.21       | groupcommit only +9% over everysec
+                         |           |           |             | always pays 2x more per op
+AOF bytes written        | 5,450,813 | 1,014,863 | 5,247,638   |
+Bytes per op             | 134.78    | 133.89    | 134.77      | identical wire size
+fsyncs (counted/est)     | 5         | 7,580     | 250         |
+fsyncs per 1k ops        | 0.12      | 1,000.00  | 6.42        | 156x fewer than always
+RSS final (kB)           | 12,784    | 6,744     | 12,552      | tracks throughput level
+
+
+KEY INVARIANT — tunability proved
+================================================================
+With aof-groupcommit-window-ms=20:
+  expected fsyncs over 5s = 50/s * 5s = 250
+  observed: 250 (resource), 251 (burst)
+  -> the adaptive timer fires exactly at the configured cadence under load.
+
+With aof-groupcommit-max-bytes=65536:
+  byte-trigger only fires if a 5s burst writes >65kB BETWEEN windows.
+  observed byte_triggers: 0 (in all runs) -> the time window dominates,
+  byte trigger acts as a safety net for pathological 1-byte values that
+  inflate the aof_buf without elapsing window time.

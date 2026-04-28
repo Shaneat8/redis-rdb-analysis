@@ -1,0 +1,40 @@
+2026-04-28T15:22:12 [INFO ] exp1 start  baseline=redis-server.baseline  modified=redis-server.modified  runs=3
+2026-04-28T15:22:12 [INFO ] workload  keys=50000  value_size=256B
+2026-04-28T15:22:12 [INFO ] phaseA variant=baseline cksum=yes run=1 port=6501
+2026-04-28T15:22:12 [INFO ]   saved  ms=86  bytes=1637865
+2026-04-28T15:22:12 [INFO ] phaseA variant=baseline cksum=yes run=2 port=6502
+2026-04-28T15:22:12 [INFO ]   saved  ms=64  bytes=1637865
+2026-04-28T15:22:13 [INFO ] phaseA variant=baseline cksum=yes run=3 port=6503
+2026-04-28T15:22:13 [INFO ]   saved  ms=73  bytes=1637865
+2026-04-28T15:22:13 [INFO ]   median baseline cksum=yes -> 73ms
+2026-04-28T15:22:13 [INFO ] phaseA variant=baseline cksum=no run=1 port=6504
+2026-04-28T15:22:14 [INFO ]   saved  ms=68  bytes=1637865
+2026-04-28T15:22:14 [INFO ] phaseA variant=baseline cksum=no run=2 port=6505
+2026-04-28T15:22:14 [INFO ]   saved  ms=67  bytes=1637865
+2026-04-28T15:22:14 [INFO ] phaseA variant=baseline cksum=no run=3 port=6506
+2026-04-28T15:22:15 [INFO ]   saved  ms=76  bytes=1637865
+2026-04-28T15:22:15 [INFO ]   median baseline cksum=no -> 68ms
+2026-04-28T15:22:15 [INFO ] phaseA variant=modified cksum=yes run=1 port=6507
+2026-04-28T15:22:15 [INFO ]   saved  ms=77  bytes=1637865
+2026-04-28T15:22:15 [INFO ] phaseA variant=modified cksum=yes run=2 port=6508
+2026-04-28T15:22:16 [INFO ]   saved  ms=126  bytes=1637865
+2026-04-28T15:22:16 [INFO ] phaseA variant=modified cksum=yes run=3 port=6509
+2026-04-28T15:22:16 [INFO ]   saved  ms=84  bytes=1637865
+2026-04-28T15:22:17 [INFO ]   median modified cksum=yes -> 84ms
+2026-04-28T15:22:17 [INFO ] phaseA variant=modified cksum=no run=1 port=6510
+2026-04-28T15:22:17 [INFO ]   saved  ms=84  bytes=1637865
+2026-04-28T15:22:17 [INFO ] phaseA variant=modified cksum=no run=2 port=6511
+2026-04-28T15:22:17 [INFO ]   saved  ms=82  bytes=1637865
+2026-04-28T15:22:18 [INFO ] phaseA variant=modified cksum=no run=3 port=6512
+2026-04-28T15:22:18 [INFO ]   saved  ms=81  bytes=1637865
+2026-04-28T15:22:18 [INFO ]   median modified cksum=no -> 82ms
+2026-04-28T15:22:18 [INFO ] phaseB source=dump.rdb  size=1637865
+2026-04-28T15:22:19 [INFO ] phaseB shape=clean variant=baseline -> ACCEPTED
+2026-04-28T15:22:20 [INFO ] phaseB shape=clean variant=modified -> ACCEPTED
+2026-04-28T15:22:21 [INFO ] phaseB shape=append1 variant=baseline -> ACCEPTED
+2026-04-28T15:22:21 [INFO ] phaseB shape=append1 variant=modified -> REJECTED
+2026-04-28T15:22:22 [INFO ] phaseB shape=append16 variant=baseline -> ACCEPTED
+2026-04-28T15:22:23 [INFO ] phaseB shape=append16 variant=modified -> REJECTED
+2026-04-28T15:22:24 [INFO ] phaseB shape=trunc4 variant=baseline -> REJECTED
+2026-04-28T15:22:24 [INFO ] phaseB shape=trunc4 variant=modified -> REJECTED
+2026-04-28T15:22:25 [INFO ] exp1 done. metrics=/sessions/elegant-wonderful-pasteur/mnt/redis-rdb-analysis/experiments/exp1_crc64_toggle/c_results/metrics.txt  log=/sessions/elegant-wonderful-pasteur/mnt/redis-rdb-analysis/experiments/exp1_crc64_toggle/c_results/run.log

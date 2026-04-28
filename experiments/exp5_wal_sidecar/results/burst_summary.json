@@ -1,0 +1,42 @@
+{
+  "_note": "Captured from src/run_burst.py runs (16 concurrent writers, 3 s, 30% critical writes).",
+  "everysec": {
+    "mode": "everysec",
+    "n_workers": 16,
+    "duration_s": 3.0061166286468506,
+    "total_writes": 10467,
+    "critical_writes": 3141,
+    "throughput_ops_s": 3481.90083520197,
+    "lat_normal_us": {"p50": 3351.504001329886, "p95": 11927.98600095557, "p99": 16923.883002164075},
+    "lat_critical_us": {"p50": 3738.407998753246, "p95": 12015.052001515869, "p99": 17830.18700007233}
+  },
+  "always": {
+    "mode": "always",
+    "n_workers": 16,
+    "duration_s": 3.0111429691314697,
+    "total_writes": 5164,
+    "critical_writes": 1556,
+    "throughput_ops_s": 1714.9634052379445,
+    "lat_normal_us": {"p50": 9054.535999894142, "p95": 13258.517999929609, "p99": 17098.31799962558},
+    "lat_critical_us": {"p50": 9015.742998599308, "p95": 13056.174997473136, "p99": 16752.717001509154}
+  },
+  "sgc": {
+    "mode": "sgc",
+    "n_workers": 16,
+    "duration_s": 3.009946584701538,
+    "total_writes": 9062,
+    "critical_writes": 2736,
+    "throughput_ops_s": 3010.6846566842232,
+    "lat_normal_us": {"p50": 1356.2540007114876, "p95": 5242.8190028877, "p99": 8683.90100004035},
+    "lat_critical_us": {"p50": 12694.78100221022, "p95": 19804.622999799903, "p99": 24099.299000226893},
+    "sgc_stats": {
+      "flushes": 246,
+      "records_flushed": 2736,
+      "bytes_flushed": 238737,
+      "avg_records_per_flush": 11.121951219512194,
+      "fsync_us_total": 1081200,
+      "fsync_us_avg": 4395,
+      "fsync_us_max": 8136
+    }
+  }
+}

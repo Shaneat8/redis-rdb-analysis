@@ -1,0 +1,45 @@
+{
+  "_note": "Captured from src/run_resource.py runs (16 concurrent writers, 3 s, 30% critical writes). Per-process /proc/pid/io counters were unreliable inside the sandbox PID namespace, so on-disk file sizes are reported as the authoritative bytes-to-disk metric.",
+  "everysec": {
+    "mode": "everysec",
+    "duration_s": 3.0,
+    "n_workers": 16,
+    "total_writes": 6212,
+    "throughput_ops_s": 2070.6666666666665,
+    "redis_peak_rss_kb": 6008,
+    "aof_size_bytes": 595283,
+    "wal_size_bytes": 0,
+    "total_bytes_to_disk": 595283
+  },
+  "always": {
+    "mode": "always",
+    "duration_s": 3.0,
+    "n_workers": 16,
+    "total_writes": 3982,
+    "throughput_ops_s": 1327.3333333333333,
+    "redis_peak_rss_kb": 6028,
+    "aof_size_bytes": 381203,
+    "wal_size_bytes": 0,
+    "total_bytes_to_disk": 381203
+  },
+  "sgc": {
+    "mode": "sgc",
+    "duration_s": 3.0,
+    "n_workers": 16,
+    "total_writes": 5898,
+    "throughput_ops_s": 1966.0,
+    "redis_peak_rss_kb": 6028,
+    "aof_size_bytes": 573392,
+    "wal_size_bytes": 149430,
+    "total_bytes_to_disk": 722822,
+    "sgc_stats": {
+      "flushes": 178,
+      "records_flushed": 1762,
+      "bytes_flushed": 149430,
+      "avg_records_per_flush": 9.898876404494382,
+      "fsync_us_total": 1119041,
+      "fsync_us_avg": 6286,
+      "fsync_us_max": 16041
+    }
+  }
+}

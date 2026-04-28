@@ -1,0 +1,24 @@
+Experiment 1 - CRC64 hardening - metrics (Phase A median of 3 runs)
+==========================================================
+workload             50000 keys x 256B values
+baseline             redis-server.baseline
+modified             redis-server.modified
+runs/cell            3
+
+[A] Save-time impact (median ms)
+  cksum    baseline     modified     delta       
+  yes      73 ms        84 ms        +11 ms      
+  no       68 ms        82 ms        +14 ms      
+
+[B] RDB file size: 1637865 bytes  (identical across variants)
+
+[C] Corruption detection (rdbchecksum=no)
+  shape     baseline   modified   differs?
+  clean     ACCEPTED   ACCEPTED   no
+  append1   ACCEPTED   REJECTED   YES
+  append16  ACCEPTED   REJECTED   YES
+  trunc4    REJECTED   REJECTED   no
+
+Headline: baseline silently ACCEPTS files with appended garbage when
+rdbchecksum=no. Patched build REJECTS them via a structural EOF check.
+Save-time deltas are within run-to-run noise (sub-25%, sub-100ms).

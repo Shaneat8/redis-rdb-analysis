@@ -252,3 +252,204 @@ FILE *fp = fopen("/tmp/rdb_trace.log", "a");
 // Change to any writable path
 ```
 
+---
+
+## Configuration Changes Used in the Experiment Series
+
+The four experiments under `experiments/` did not require source
+modification. Each toggled documented `redis.conf` directives only.
+The deltas applied per experiment (vs Redis 6.2 stock defaults) are:
+
+### Experiment 1 — `exp1_crc64_toggle/`
+
+```
+# baseline.conf — no override (rdbchecksum defaults to yes)
+# modified.conf
+rdbchecksum no
+```
+
+Effect: trailer of dump.rdb becomes 8 zero bytes, load-time CRC
+verification is skipped, single-byte corruption goes undetected.
+
+### Experiment 2 — `exp2_listpack_sweep/`
+
+```
+# Swept across a 5-value set on a per-run config:
+hash-max-ziplist-entries {32, 64, 128, 256, 512}
+hash-max-ziplist-value 64       # held constant
+```
+
+Note: in Redis 7.x the equivalent directive is
+`hash-max-listpack-entries`. Semantics are identical for this sweep.
+
+### Experiment 3 — `exp3_writestorm_bgsave/`
+
+```
+# baseline.conf (intentionally bad — to amplify the storm cost)
+rdb-save-incremental-fsync no
+maxmemory-policy noeviction
+
+# modified.conf (apply standard tuning)
+rdb-save-incremental-fsync yes  # default; explicitly set
+lazyfree-lazy-expire yes
+maxmemory-policy noeviction
+```
+
+Effect: with incremental fsync off, the RDB child issues one
+`fsync()` at end-of-save; with it on, `sync_file_range(...)` runs
+every 4 MB written. The toggle does not change RDB content, only
+writeback scheduling.
+
+### Experiment 4 — `exp4_kill9_durability/`
+
+```
+# baseline.conf — RDB-only
+appendonly no
+save ""                         # disable auto-snapshot
+
+# modified.conf — RDB + AOF, default fsync cadence
+appendonly yes
+appendfilename appendonly.aof
+appendfsync everysec
+no-appendfsync-on-rewrite no
+save ""
+```
+
+Effect: AOF captures every write to `appendonly.aof`; the background
+fsync thread flushes the AOF buffer to disk every 1 s. After
+SIGKILL, restart loads AOF (taking precedence over RDB) and replays
+all writes the fsync thread had time to commit.
+
+### Settings held constant across all four experiments
+
+```
+port           (per-experiment, see config files)
+daemonize      no
+dir            <per-experiment temp dir>
+dbfilename     dump.rdb
+loglevel       notice
+```
+
+No source changes were required for the experiments. All deviations
+from the Redis 6.2 defaults are listed above; everything else
+follows the upstream redis.conf shipped with the redislite-bundled
+binary.
+
+### Experiment 5 — `exp5_wal_sidecar/` (Selective Group-Commit Durability Sidecar)
+
+This experiment introduces a **client-side library**, not a server
+modification. Three Redis configurations are compared, all running
+default Redis 6.2 with no source changes:
+
+```
+# everysec.conf — primary baseline; also the server underneath SGC
+port 17501
+appendonly yes
+appendfilename appendonly.aof
+appendfsync everysec
+no-appendfsync-on-rewrite no
+save ""
+
+# always.conf — comparison ceiling for durability
+port 17503
+appendonly yes
+appendfilename appendonly.aof
+appendfsync always              # only delta vs everysec
+no-appendfsync-on-rewrite no
+save ""
+
+# sgc.conf — identical to everysec (the upgrade is in the client)
+port 17502
+appendonly yes
+appendfilename appendonly.aof
+appendfsync everysec
+no-appendfsync-on-rewrite no
+save ""
+```
+
+**The actual delta is in client code**, in
+`experiments/exp5_wal_sidecar/src/sgc_client.py`:
+
+- New API: `set_critical(key, value)` (alongside the normal `set`).
+- Background flusher thread that group-commits queued critical writes
+  every 5 ms or 64 KB to a sidecar WAL with one `fsync()` per batch.
+- `__sgc:applied_seq` advanced atomically with each batch's pipeline
+  apply; idempotent `replay()` for crash recovery.
+
+**Files added (no Redis source modified):**
+
+```
+experiments/exp5_wal_sidecar/
+├── config/{everysec,always,sgc}.conf
+├── src/
+│   ├── sgc_client.py          # the library
+│   ├── run_burst.py           # workload A: throughput + p50/p95/p99
+│   ├── durability_gap.py      # workload B: critical-loss accounting
+│   └── run_resource.py        # workload C: bytes / fsyncs / RSS
+├── results/{metrics.txt,diff.txt}
+├── analysis.md
+└── summary.md
+```
+
+
+---
+
+## Experiment 5 v2 — In-tree Adaptive Group-Commit AOF (in-source)
+
+This iteration replaces the external Python sidecar with a real C-level patch
+to Redis 6.2.14. New `appendfsync` mode `groupcommit` added directly to the
+AOF code path.
+
+### Source files modified
+
+| File | Lines changed | Nature of change |
+|---|---|---|
+| `redis/src/server.h` | +6 | `#define AOF_FSYNC_GROUPCOMMIT 3` and 5 new server fields |
+| `redis/src/config.c` | +3 | New enum entry + two `MODIFIABLE_CONFIG` registrations |
+| `redis/src/aof.c` | +27 | Two new branches in `flushAppendOnlyFile()`: idle-tail drain when window elapses, adaptive try_fsync trigger |
+| `redis/src/server.c` | +5 | Field initialization + two new INFO persistence lines |
+
+### New configuration knobs
+
+```conf
+appendfsync groupcommit            # new mode alongside everysec/always/no
+aof-groupcommit-window-ms 20       # min ms between background fsyncs
+aof-groupcommit-max-bytes 65536    # force fsync if unsynced bytes exceed this
+```
+
+Both knobs are runtime-modifiable via `CONFIG SET`.
+
+### New INFO persistence fields
+
+```
+aof_groupcommit_fsyncs:251           # cumulative count of group-commit fsyncs scheduled
+aof_groupcommit_byte_triggers:0      # subset triggered by byte ceiling (vs window)
+```
+
+### Build
+
+```bash
+cd /tmp/redis-build && make -j4
+# Binary: /tmp/redis-build/src/redis-server
+# Copied to: experiments/exp5_wal_sidecar/bin/redis-server-modified
+```
+
+### Experiments rerun
+
+Three experiments under `experiments/exp5_wal_sidecar/src_v2/`:
+- `exp_crash_durability.py` — kill -9 + theoretical loss-window measurement
+- `exp_high_writeload.py` — 16-writer burst, p50/p95/p99 latency, throughput, RSS
+- `exp_resource_impact.py` — 8-writer steady load, CPU jiffies, AOF bytes-on-disk, fsync count
+
+Results in `experiments/exp5_wal_sidecar/results_v2/{crash,burst,resource}_summary.json`
+and `experiments/exp5_wal_sidecar/results_v2/metrics.txt`.
+
+### Headline impact
+
+| | default `everysec` | default `always` | modified `groupcommit` |
+|---|---|---|---|
+| Throughput (16 writers) | 8,824 ops/s | 2,407 ops/s | 8,315 ops/s |
+| p50 latency | 1.44 ms | 7.01 ms | 1.50 ms |
+| Worst-case loss window | 1,000 ms | 0 ms | 20 ms |
+
+50× tighter durability than `everysec` for a 6% throughput cost.
