@@ -1,0 +1,23 @@
+13340:C 14 May 2026 07:06:03.665 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+13340:C 14 May 2026 07:06:03.673 # Redis version=6.2.14, bits=64, commit=91863dd8, modified=1, pid=13340, just started
+13340:C 14 May 2026 07:06:03.680 # Configuration loaded
+13340:M 14 May 2026 07:06:03.687 * monotonic clock: POSIX clock_gettime
+13340:M 14 May 2026 07:06:03.696 * Running mode=standalone, port=41185.
+13340:M 14 May 2026 07:06:03.703 # Server initialized
+13340:M 14 May 2026 07:06:03.712 * Loading RDB produced by version 6.2.14
+13340:M 14 May 2026 07:06:03.719 * RDB age 774 seconds
+13340:M 14 May 2026 07:06:03.727 * RDB memory usage when created 1.13 Mb
+13340:M 14 May 2026 07:06:03.735 # Wrong RDB checksum expected: (abf1bb29a8ac23d7) but got (6bc6a491274e2ea8). Aborting now.
+13340:M 14 May 2026 07:06:03.755 # Internal error in RDB reading offset 0, function at rdb.c:2726 -> RDB CRC error
+65725:C 14 May 2026 07:14:35.134 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+65725:C 14 May 2026 07:14:35.138 # Redis version=6.2.14, bits=64, commit=91863dd8, modified=1, pid=65725, just started
+65725:C 14 May 2026 07:14:35.138 # Configuration loaded
+65725:M 14 May 2026 07:14:35.138 * monotonic clock: POSIX clock_gettime
+65725:M 14 May 2026 07:14:35.139 * Running mode=standalone, port=38099.
+65725:M 14 May 2026 07:14:35.139 # Server initialized
+65725:M 14 May 2026 07:14:35.139 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+65725:M 14 May 2026 07:14:35.139 * Loading RDB produced by version 6.2.14
+65725:M 14 May 2026 07:14:35.139 * RDB age 426 seconds
+65725:M 14 May 2026 07:14:35.139 * RDB memory usage when created 1.13 Mb
+65725:M 14 May 2026 07:14:35.142 # Wrong RDB checksum expected: (ce728e5a18ffc9cf) but got (2d1c9debb9f32c76). Aborting now.
+65725:M 14 May 2026 07:14:35.142 # Internal error in RDB reading offset 0, function at rdb.c:2726 -> RDB CRC error

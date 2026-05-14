@@ -1,0 +1,41 @@
+# Real capture from instrumented Redis 6.2.14 after BGSAVE on 2 keys.
+# Format: [epoch_seconds] [EVENT_TAG] message
+
+[1776268812] [START] rdbSaveInternal started: file=temp-14502.rdb
+[1776268812] [FLOW] Calling rdbSaveRio
+[1776268812] [FLOW] Entered rdbSaveRio
+[1776268812] [HEADER] Writing RDB header version: 13
+[1776268812] [AUX] Writing AUX fields
+[1776268812] [MODULE] Saving module AUX (before RDB)
+[1776268812] [FUNC] Saving functions
+[1776268812] [DB] Saving DB 0
+[1776268812] [DB] Entering DB 0 (keys=2)
+[1776268812] [DB_META] Writing SELECTDB for DB 0
+[1776268812] [DB_META] DB 0 sizes: keys=2 expires=0
+[1776268812] [KEY] Saving key in DB 0
+[1776268812] [KEY_DONE] Key saved (bytes=5)
+[1776268812] [PROGRESS] Saved 1 keys so far
+[1776268812] [KEY] Saving key in DB 0
+[1776268812] [KEY_DONE] Key saved (bytes=5)
+[1776268812] [DB_DONE] Completed DB 0
+[1776268812] [DB_DONE] DB 0 done, keys saved in this DB: 2
+[1776268812] [DB] Skipping empty DB 1
+[1776268812] [DB] Skipping empty DB 2
+[1776268812] [DB] Skipping empty DB 3
+[1776268812] [DB] Skipping empty DB 4
+[1776268812] [DB] Skipping empty DB 5
+[1776268812] [DB] Skipping empty DB 6
+[1776268812] [DB] Skipping empty DB 7
+[1776268812] [DB] Skipping empty DB 8
+[1776268812] [DB] Skipping empty DB 9
+[1776268812] [DB] Skipping empty DB 10
+[1776268812] [DB] Skipping empty DB 11
+[1776268812] [DB] Skipping empty DB 12
+[1776268812] [DB] Skipping empty DB 13
+[1776268812] [DB] Skipping empty DB 14
+[1776268812] [DB] Skipping empty DB 15
+[1776268950] [MODULE] Saving module AUX (after RDB)
+[1776268950] [EOF] Writing EOF opcode
+[1776268950] [CHECKSUM] Writing checksum
+[1776268950] [SUCCESS] RDB save complete: keys=2 skipped=0 bytes=109
+[1776268950] [FILE] Closing RDB file

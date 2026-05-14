@@ -1,0 +1,17 @@
+--- /tmp/redis_build/redislite-6.2.912183/redis.submodule/src/rdb.h	2023-10-18 07:43:10.000000000 +0000
++++ /tmp/exp6_only/src/rdb.h	2026-04-28 03:04:13.619052696 +0000
+@@ -107,6 +107,14 @@
+ #define RDB_OPCODE_SELECTDB   254   /* DB number of the following keys. */
+ #define RDB_OPCODE_EOF        255   /* End of the RDB file. */
+ 
++/* === EXP6 INCREMENTAL RDB === */
++#define RDB_OPCODE_INCR_HEADER 0xE0  /* Followed by 40-byte base UUID */
++#define RDB_OPCODE_INCR_DELETE 0xE1  /* Tombstone: followed by raw-string key */
++#define RDBFLAGS_INCREMENTAL (1<<4)  /* Save is a diff against base snapshot */
++
++int rdbSaveIncremental(char *filename, char *base_uuid);
++
++
+ /* Module serialized values sub opcodes */
+ #define RDB_MODULE_OPCODE_EOF   0   /* End of module value. */
+ #define RDB_MODULE_OPCODE_SINT  1   /* Signed integer. */

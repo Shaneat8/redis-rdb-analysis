@@ -1,0 +1,21 @@
+13040:C 14 May 2026 06:59:13.344 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+13040:C 14 May 2026 06:59:13.366 # Redis version=6.2.14, bits=64, commit=91863dd8, modified=1, pid=13040, just started
+13040:C 14 May 2026 06:59:13.377 # Configuration loaded
+13040:M 14 May 2026 06:59:13.390 * monotonic clock: POSIX clock_gettime
+13040:M 14 May 2026 06:59:13.408 * Running mode=standalone, port=43941.
+13040:M 14 May 2026 06:59:13.418 # Server initialized
+13040:M 14 May 2026 06:59:13.430 * Loading RDB produced by version 6.2.14
+13040:M 14 May 2026 06:59:13.448 * RDB age 364 seconds
+13040:M 14 May 2026 06:59:13.457 * RDB memory usage when created 1.13 Mb
+13040:M 14 May 2026 06:59:13.465 # Internal error in RDB reading offset 0, function at rdb.c:2322 -> Unknown RDB encoding type 101
+64242:C 14 May 2026 07:10:47.801 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+64242:C 14 May 2026 07:10:47.808 # Redis version=6.2.14, bits=64, commit=91863dd8, modified=1, pid=64242, just started
+64242:C 14 May 2026 07:10:47.808 # Configuration loaded
+64242:M 14 May 2026 07:10:47.809 * monotonic clock: POSIX clock_gettime
+64242:M 14 May 2026 07:10:47.810 * Running mode=standalone, port=55209.
+64242:M 14 May 2026 07:10:47.810 # Server initialized
+64242:M 14 May 2026 07:10:47.810 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+64242:M 14 May 2026 07:10:47.811 * Loading RDB produced by version 6.2.14
+64242:M 14 May 2026 07:10:47.811 * RDB age 198 seconds
+64242:M 14 May 2026 07:10:47.811 * RDB memory usage when created 1.13 Mb
+64242:M 14 May 2026 07:10:47.811 # Internal error in RDB reading offset 0, function at rdb.c:2322 -> Unknown RDB encoding type 93

@@ -1,0 +1,107 @@
+# =====================================================================
+# Build artifacts — Redis trees
+# (Both redis/ and redis-modified/ are buildable from source. Their
+# build artifacts add ~500 MB and rebuild in ~1 minute. Don't track.)
+# =====================================================================
+
+# Top-level binaries
+redis/src/redis-server
+redis/src/redis-cli
+redis/src/redis-benchmark
+redis/src/redis-sentinel
+redis/src/redis-check-*
+redis-modified/src/redis-server*
+redis-modified/src/redis-cli
+redis-modified/src/redis-benchmark
+redis-modified/src/redis-sentinel
+redis-modified/src/redis-check-*
+
+# Compilation outputs
+redis/src/*.o
+redis/src/*.d
+redis-modified/src/*.o
+redis-modified/src/*.d
+
+# Build settings files
+redis/src/.make-*
+redis/src/Makefile.dep
+redis-modified/src/.make-*
+redis-modified/src/Makefile.dep
+
+# Dependency build artifacts
+redis/deps/**/*.o
+redis/deps/**/*.a
+redis/deps/**/*.sym
+redis/deps/**/*.so
+redis/deps/**/.make-*
+redis-modified/deps/**/*.o
+redis-modified/deps/**/*.a
+redis-modified/deps/**/*.sym
+redis-modified/deps/**/*.so
+redis-modified/deps/**/.make-*
+
+# jemalloc auto-generated config
+redis/deps/jemalloc/Makefile
+redis/deps/jemalloc/config.*
+redis/deps/jemalloc/jemalloc.pc
+redis/deps/jemalloc/lib/
+redis/deps/jemalloc/bin/jeprof
+redis/deps/jemalloc/bin/jemalloc-config
+redis/deps/jemalloc/bin/jemalloc.sh
+redis/deps/jemalloc/include/jemalloc/jemalloc_*.h
+redis/deps/jemalloc/include/jemalloc/internal/jemalloc_*.h
+redis/deps/jemalloc/include/jemalloc/internal/private_*.h
+redis/deps/jemalloc/include/jemalloc/internal/public_*.h
+redis-modified/deps/jemalloc/Makefile
+redis-modified/deps/jemalloc/config.*
+redis-modified/deps/jemalloc/jemalloc.pc
+redis-modified/deps/jemalloc/lib/
+redis-modified/deps/jemalloc/bin/jeprof
+redis-modified/deps/jemalloc/bin/jemalloc-config
+redis-modified/deps/jemalloc/bin/jemalloc.sh
+redis-modified/deps/jemalloc/include/jemalloc/jemalloc_*.h
+redis-modified/deps/jemalloc/include/jemalloc/internal/jemalloc_*.h
+redis-modified/deps/jemalloc/include/jemalloc/internal/private_*.h
+redis-modified/deps/jemalloc/include/jemalloc/internal/public_*.h
+
+# lua and lua-cjson build outputs
+redis/deps/lua/src/lua
+redis/deps/lua/src/luac
+redis-modified/deps/lua/src/lua
+redis-modified/deps/lua/src/luac
+
+# =====================================================================
+# Runtime artifacts
+# =====================================================================
+
+# Snapshot files produced during experiments
+*.rdb
+*.aof
+appendonly.aof.manifest
+temp-*.rdb
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.Python
+
+# Virtual environments
+venv/
+.venv/
+
+# =====================================================================
+# Editor / OS junk
+# =====================================================================
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# =====================================================================
+# Backup branches and ad-hoc files
+# =====================================================================
+*.bak
+*.orig

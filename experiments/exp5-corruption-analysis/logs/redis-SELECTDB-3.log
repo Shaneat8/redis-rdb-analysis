@@ -1,0 +1,21 @@
+13030:C 14 May 2026 06:58:54.498 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+13030:C 14 May 2026 06:58:54.505 # Redis version=6.2.14, bits=64, commit=91863dd8, modified=1, pid=13030, just started
+13030:C 14 May 2026 06:58:54.512 # Configuration loaded
+13030:M 14 May 2026 06:58:54.520 * monotonic clock: POSIX clock_gettime
+13030:M 14 May 2026 06:58:54.527 * Running mode=standalone, port=55837.
+13030:M 14 May 2026 06:58:54.535 # Server initialized
+13030:M 14 May 2026 06:58:54.543 * Loading RDB produced by version 6.2.14
+13030:M 14 May 2026 06:58:54.551 * RDB age 345 seconds
+13030:M 14 May 2026 06:58:54.560 * RDB memory usage when created 1.13 Mb
+13030:M 14 May 2026 06:58:54.568 # Internal error in RDB reading offset 0, function at rdb.c:2322 -> Unknown RDB encoding type 144
+64132:C 14 May 2026 07:10:29.091 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+64132:C 14 May 2026 07:10:29.097 # Redis version=6.2.14, bits=64, commit=91863dd8, modified=1, pid=64132, just started
+64132:C 14 May 2026 07:10:29.097 # Configuration loaded
+64132:M 14 May 2026 07:10:29.098 * monotonic clock: POSIX clock_gettime
+64132:M 14 May 2026 07:10:29.098 * Running mode=standalone, port=45311.
+64132:M 14 May 2026 07:10:29.098 # Server initialized
+64132:M 14 May 2026 07:10:29.098 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+64132:M 14 May 2026 07:10:29.099 * Loading RDB produced by version 6.2.14
+64132:M 14 May 2026 07:10:29.099 * RDB age 180 seconds
+64132:M 14 May 2026 07:10:29.099 * RDB memory usage when created 1.13 Mb
+64132:M 14 May 2026 07:10:29.099 # Internal error in RDB reading offset 0, function at rdb.c:2322 -> Unknown RDB encoding type 54

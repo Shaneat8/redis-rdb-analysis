@@ -1,0 +1,11 @@
+13305:C 14 May 2026 07:05:21.072 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+13305:C 14 May 2026 07:05:21.084 # Redis version=6.2.14, bits=64, commit=91863dd8, modified=1, pid=13305, just started
+13305:C 14 May 2026 07:05:21.093 # Configuration loaded
+13305:M 14 May 2026 07:05:21.102 * monotonic clock: POSIX clock_gettime
+13305:M 14 May 2026 07:05:21.110 * Running mode=standalone, port=58023.
+13305:M 14 May 2026 07:05:21.119 # Server initialized
+13305:M 14 May 2026 07:05:21.126 * Loading RDB produced by version 6.2.14
+13305:M 14 May 2026 07:05:21.135 * RDB age 732 seconds
+13305:M 14 May 2026 07:05:21.143 * RDB memory usage when created 1.13 Mb
+13305:M 14 May 2026 07:05:21.151 # Internal error in RDB reading offset 0, function at rdb.c:415 -> Invalid LZF compressed string
+13305:M 14 May 2026 07:05:21.160 # Terminating server after rdb file reading failure.

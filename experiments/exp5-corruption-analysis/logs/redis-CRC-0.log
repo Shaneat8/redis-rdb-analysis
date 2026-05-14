@@ -1,0 +1,47 @@
+12665:C 14 May 2026 06:44:50.188 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+12665:C 14 May 2026 06:44:50.195 # Redis version=6.2.14, bits=64, commit=91863dd8, modified=1, pid=12665, just started
+12665:C 14 May 2026 06:44:50.202 # Configuration loaded
+12665:M 14 May 2026 06:44:50.210 * monotonic clock: POSIX clock_gettime
+12665:M 14 May 2026 06:44:50.217 * Running mode=standalone, port=50137.
+12665:M 14 May 2026 06:44:50.225 # Server initialized
+12665:M 14 May 2026 06:44:50.232 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+12665:M 14 May 2026 06:44:50.242 * Loading RDB produced by version 6.2.14
+12665:M 14 May 2026 06:44:50.249 * RDB age 156 seconds
+12665:M 14 May 2026 06:44:50.259 * RDB memory usage when created 1.13 Mb
+12665:M 14 May 2026 06:44:50.267 # Wrong RDB checksum expected: (74202a4430bae285) but got (74202a4430ba9d85). Aborting now.
+12665:M 14 May 2026 06:44:50.277 # Internal error in RDB reading offset 0, function at rdb.c:2726 -> RDB CRC error
+13565:C 14 May 2026 07:10:09.410 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+13565:C 14 May 2026 07:10:09.419 # Redis version=6.2.14, bits=64, commit=91863dd8, modified=1, pid=13565, just started
+13565:C 14 May 2026 07:10:09.429 # Configuration loaded
+13565:M 14 May 2026 07:10:09.438 * monotonic clock: POSIX clock_gettime
+13565:M 14 May 2026 07:10:09.446 * Running mode=standalone, port=40559.
+13565:M 14 May 2026 07:10:09.455 # Server initialized
+13565:M 14 May 2026 07:10:09.464 * Loading RDB produced by version 6.2.14
+13565:M 14 May 2026 07:10:09.473 * RDB age 1020 seconds
+13565:M 14 May 2026 07:10:09.481 * RDB memory usage when created 1.13 Mb
+13565:M 14 May 2026 07:10:09.491 # Wrong RDB checksum expected: (6bc6a491274e2ea8) but got (6bc6a491274e2e4d). Aborting now.
+13565:M 14 May 2026 07:10:09.500 # Internal error in RDB reading offset 0, function at rdb.c:2726 -> RDB CRC error
+62706:C 14 May 2026 07:06:31.539 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+62706:C 14 May 2026 07:06:31.545 # Redis version=6.2.14, bits=64, commit=91863dd8, modified=1, pid=62706, just started
+62706:C 14 May 2026 07:06:31.545 # Configuration loaded
+62706:M 14 May 2026 07:06:31.546 * monotonic clock: POSIX clock_gettime
+62706:M 14 May 2026 07:06:31.546 * Running mode=standalone, port=48647.
+62706:M 14 May 2026 07:06:31.546 # Server initialized
+62706:M 14 May 2026 07:06:31.546 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+62706:M 14 May 2026 07:06:31.547 * Loading RDB produced by version 6.2.14
+62706:M 14 May 2026 07:06:31.547 * RDB age 59 seconds
+62706:M 14 May 2026 07:06:31.547 * RDB memory usage when created 1.13 Mb
+62706:M 14 May 2026 07:06:31.549 # Wrong RDB checksum expected: (afedf645fc04a265) but got (afedf645fc04a20a). Aborting now.
+62706:M 14 May 2026 07:06:31.550 # Internal error in RDB reading offset 0, function at rdb.c:2726 -> RDB CRC error
+66440:C 14 May 2026 07:16:22.338 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+66440:C 14 May 2026 07:16:22.344 # Redis version=6.2.14, bits=64, commit=91863dd8, modified=1, pid=66440, just started
+66440:C 14 May 2026 07:16:22.344 # Configuration loaded
+66440:M 14 May 2026 07:16:22.344 * monotonic clock: POSIX clock_gettime
+66440:M 14 May 2026 07:16:22.345 * Running mode=standalone, port=56025.
+66440:M 14 May 2026 07:16:22.345 # Server initialized
+66440:M 14 May 2026 07:16:22.345 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+66440:M 14 May 2026 07:16:22.346 * Loading RDB produced by version 6.2.14
+66440:M 14 May 2026 07:16:22.346 * RDB age 533 seconds
+66440:M 14 May 2026 07:16:22.346 * RDB memory usage when created 1.13 Mb
+66440:M 14 May 2026 07:16:22.348 # Wrong RDB checksum expected: (2d1c9debb9f32c76) but got (2d1c9debb9f32c5a). Aborting now.
+66440:M 14 May 2026 07:16:22.348 # Internal error in RDB reading offset 0, function at rdb.c:2726 -> RDB CRC error

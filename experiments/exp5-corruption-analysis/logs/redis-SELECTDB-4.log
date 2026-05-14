@@ -1,0 +1,21 @@
+13035:C 14 May 2026 06:59:05.526 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+13035:C 14 May 2026 06:59:05.534 # Redis version=6.2.14, bits=64, commit=91863dd8, modified=1, pid=13035, just started
+13035:C 14 May 2026 06:59:05.542 # Configuration loaded
+13035:M 14 May 2026 06:59:05.549 * monotonic clock: POSIX clock_gettime
+13035:M 14 May 2026 06:59:05.557 * Running mode=standalone, port=39349.
+13035:M 14 May 2026 06:59:05.564 # Server initialized
+13035:M 14 May 2026 06:59:05.571 * Loading RDB produced by version 6.2.14
+13035:M 14 May 2026 06:59:05.579 * RDB age 356 seconds
+13035:M 14 May 2026 06:59:05.586 * RDB memory usage when created 1.13 Mb
+13035:M 14 May 2026 06:59:05.594 # Internal error in RDB reading offset 0, function at rdb.c:2322 -> Unknown RDB encoding type 174
+64196:C 14 May 2026 07:10:40.278 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+64196:C 14 May 2026 07:10:40.285 # Redis version=6.2.14, bits=64, commit=91863dd8, modified=1, pid=64196, just started
+64196:C 14 May 2026 07:10:40.285 # Configuration loaded
+64196:M 14 May 2026 07:10:40.285 * monotonic clock: POSIX clock_gettime
+64196:M 14 May 2026 07:10:40.286 * Running mode=standalone, port=35509.
+64196:M 14 May 2026 07:10:40.286 # Server initialized
+64196:M 14 May 2026 07:10:40.286 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+64196:M 14 May 2026 07:10:40.286 * Loading RDB produced by version 6.2.14
+64196:M 14 May 2026 07:10:40.286 * RDB age 191 seconds
+64196:M 14 May 2026 07:10:40.286 * RDB memory usage when created 1.13 Mb
+64196:M 14 May 2026 07:10:40.286 # Internal error in RDB reading offset 0, function at rdb.c:2322 -> Unknown RDB encoding type 158

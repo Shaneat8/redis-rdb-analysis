@@ -1,0 +1,8 @@
+12852:C 14 May 2026 06:54:28.042 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+12852:C 14 May 2026 06:54:28.052 # Redis version=6.2.14, bits=64, commit=91863dd8, modified=1, pid=12852, just started
+12852:C 14 May 2026 06:54:28.059 # Configuration loaded
+12852:M 14 May 2026 06:54:28.067 * monotonic clock: POSIX clock_gettime
+12852:M 14 May 2026 06:54:28.074 * Running mode=standalone, port=37755.
+12852:M 14 May 2026 06:54:28.082 # Server initialized
+12852:M 14 May 2026 06:54:28.089 # Can't handle RDB format version 0
+12852:M 14 May 2026 06:54:28.096 # Fatal error loading the DB: Invalid argument. Exiting.

@@ -1,0 +1,21 @@
+13045:C 14 May 2026 06:59:24.330 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+13045:C 14 May 2026 06:59:24.337 # Redis version=6.2.14, bits=64, commit=91863dd8, modified=1, pid=13045, just started
+13045:C 14 May 2026 06:59:24.345 # Configuration loaded
+13045:M 14 May 2026 06:59:24.352 * monotonic clock: POSIX clock_gettime
+13045:M 14 May 2026 06:59:24.360 * Running mode=standalone, port=58251.
+13045:M 14 May 2026 06:59:24.368 # Server initialized
+13045:M 14 May 2026 06:59:24.375 * Loading RDB produced by version 6.2.14
+13045:M 14 May 2026 06:59:24.383 * RDB age 375 seconds
+13045:M 14 May 2026 06:59:24.391 * RDB memory usage when created 1.13 Mb
+13045:M 14 May 2026 06:59:24.410 # Internal error in RDB reading offset 0, function at rdb.c:2322 -> Unknown RDB encoding type 195
+64294:C 14 May 2026 07:10:55.817 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+64294:C 14 May 2026 07:10:55.823 # Redis version=6.2.14, bits=64, commit=91863dd8, modified=1, pid=64294, just started
+64294:C 14 May 2026 07:10:55.823 # Configuration loaded
+64294:M 14 May 2026 07:10:55.824 * monotonic clock: POSIX clock_gettime
+64294:M 14 May 2026 07:10:55.824 * Running mode=standalone, port=35973.
+64294:M 14 May 2026 07:10:55.824 # Server initialized
+64294:M 14 May 2026 07:10:55.824 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+64294:M 14 May 2026 07:10:55.825 * Loading RDB produced by version 6.2.14
+64294:M 14 May 2026 07:10:55.825 * RDB age 206 seconds
+64294:M 14 May 2026 07:10:55.825 * RDB memory usage when created 1.13 Mb
+64294:M 14 May 2026 07:10:55.825 # Internal error in RDB reading offset 0, function at rdb.c:2322 -> Unknown RDB encoding type 240

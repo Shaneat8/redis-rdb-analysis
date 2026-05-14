@@ -1,0 +1,8 @@
+12862:C 14 May 2026 06:54:45.622 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+12862:C 14 May 2026 06:54:45.630 # Redis version=6.2.14, bits=64, commit=91863dd8, modified=1, pid=12862, just started
+12862:C 14 May 2026 06:54:45.639 # Configuration loaded
+12862:M 14 May 2026 06:54:45.649 * monotonic clock: POSIX clock_gettime
+12862:M 14 May 2026 06:54:45.658 * Running mode=standalone, port=35603.
+12862:M 14 May 2026 06:54:45.667 # Server initialized
+12862:M 14 May 2026 06:54:45.677 # Wrong signature trying to load DB from file
+12862:M 14 May 2026 06:54:45.685 # Fatal error loading the DB: Invalid argument. Exiting.

@@ -1,0 +1,21 @@
+13055:C 14 May 2026 06:59:29.083 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+13055:C 14 May 2026 06:59:29.091 # Redis version=6.2.14, bits=64, commit=91863dd8, modified=1, pid=13055, just started
+13055:C 14 May 2026 06:59:29.100 # Configuration loaded
+13055:M 14 May 2026 06:59:29.107 * monotonic clock: POSIX clock_gettime
+13055:M 14 May 2026 06:59:29.115 * Running mode=standalone, port=59267.
+13055:M 14 May 2026 06:59:29.122 # Server initialized
+13055:M 14 May 2026 06:59:29.130 * Loading RDB produced by version 6.2.14
+13055:M 14 May 2026 06:59:29.138 * RDB age 380 seconds
+13055:M 14 May 2026 06:59:29.145 * RDB memory usage when created 1.13 Mb
+13055:M 14 May 2026 06:59:29.153 # Internal error in RDB reading offset 0, function at rdb.c:2322 -> Unknown RDB encoding type 46
+64404:C 14 May 2026 07:11:14.517 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+64404:C 14 May 2026 07:11:14.523 # Redis version=6.2.14, bits=64, commit=91863dd8, modified=1, pid=64404, just started
+64404:C 14 May 2026 07:11:14.523 # Configuration loaded
+64404:M 14 May 2026 07:11:14.524 * monotonic clock: POSIX clock_gettime
+64404:M 14 May 2026 07:11:14.525 * Running mode=standalone, port=59609.
+64404:M 14 May 2026 07:11:14.525 # Server initialized
+64404:M 14 May 2026 07:11:14.525 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+64404:M 14 May 2026 07:11:14.525 * Loading RDB produced by version 6.2.14
+64404:M 14 May 2026 07:11:14.525 * RDB age 225 seconds
+64404:M 14 May 2026 07:11:14.525 * RDB memory usage when created 1.13 Mb
+64404:M 14 May 2026 07:11:14.525 # Internal error in RDB reading offset 0, function at rdb.c:2322 -> Unknown RDB encoding type 114

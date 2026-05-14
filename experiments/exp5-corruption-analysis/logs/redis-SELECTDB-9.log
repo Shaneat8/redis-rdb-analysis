@@ -1,0 +1,22 @@
+13060:C 14 May 2026 06:59:34.880 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+13060:C 14 May 2026 06:59:34.887 # Redis version=6.2.14, bits=64, commit=91863dd8, modified=1, pid=13060, just started
+13060:C 14 May 2026 06:59:34.896 # Configuration loaded
+13060:M 14 May 2026 06:59:34.913 * monotonic clock: POSIX clock_gettime
+13060:M 14 May 2026 06:59:34.922 * Running mode=standalone, port=45943.
+13060:M 14 May 2026 06:59:34.929 # Server initialized
+13060:M 14 May 2026 06:59:34.936 * Loading RDB produced by version 6.2.14
+13060:M 14 May 2026 06:59:34.944 * RDB age 385 seconds
+13060:M 14 May 2026 06:59:34.952 * RDB memory usage when created 1.13 Mb
+13060:M 14 May 2026 06:59:34.961 # Wrong RDB checksum expected: (7d60f3613e39da0) but got (6bc6a491274e2ea8). Aborting now.
+13060:M 14 May 2026 06:59:34.969 # Internal error in RDB reading offset 0, function at rdb.c:2726 -> RDB CRC error
+64450:C 14 May 2026 07:11:20.941 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+64450:C 14 May 2026 07:11:20.948 # Redis version=6.2.14, bits=64, commit=91863dd8, modified=1, pid=64450, just started
+64450:C 14 May 2026 07:11:20.948 # Configuration loaded
+64450:M 14 May 2026 07:11:20.948 * monotonic clock: POSIX clock_gettime
+64450:M 14 May 2026 07:11:20.949 * Running mode=standalone, port=55435.
+64450:M 14 May 2026 07:11:20.949 # Server initialized
+64450:M 14 May 2026 07:11:20.949 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+64450:M 14 May 2026 07:11:20.949 * Loading RDB produced by version 6.2.14
+64450:M 14 May 2026 07:11:20.949 * RDB age 231 seconds
+64450:M 14 May 2026 07:11:20.949 * RDB memory usage when created 1.13 Mb
+64450:M 14 May 2026 07:11:20.949 # Internal error in RDB reading offset 0, function at rdb.c:2322 -> Unknown RDB encoding type 50

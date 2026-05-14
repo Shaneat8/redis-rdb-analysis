@@ -1,0 +1,22 @@
+12949:C 14 May 2026 06:56:46.290 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+12949:C 14 May 2026 06:56:46.299 # Redis version=6.2.14, bits=64, commit=91863dd8, modified=1, pid=12949, just started
+12949:C 14 May 2026 06:56:46.307 # Configuration loaded
+12949:M 14 May 2026 06:56:46.315 * monotonic clock: POSIX clock_gettime
+12949:M 14 May 2026 06:56:46.322 * Running mode=standalone, port=42297.
+12949:M 14 May 2026 06:56:46.330 # Server initialized
+12949:M 14 May 2026 06:56:46.337 * Loading RDB produced by version 6.2.14
+12949:M 14 May 2026 06:56:46.346 * RDB age 217 seconds
+12949:M 14 May 2026 06:56:46.353 * RDB memory usage when created 1.13 Mb
+12949:M 14 May 2026 06:56:46.362 # Wrong RDB checksum expected: (20cce5cf5352e756) but got (6bc6a491274e2ea8). Aborting now.
+12949:M 14 May 2026 06:56:46.370 # Internal error in RDB reading offset 0, function at rdb.c:2726 -> RDB CRC error
+63856:C 14 May 2026 07:09:48.766 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+63856:C 14 May 2026 07:09:48.772 # Redis version=6.2.14, bits=64, commit=91863dd8, modified=1, pid=63856, just started
+63856:C 14 May 2026 07:09:48.772 # Configuration loaded
+63856:M 14 May 2026 07:09:48.772 * monotonic clock: POSIX clock_gettime
+63856:M 14 May 2026 07:09:48.773 * Running mode=standalone, port=52163.
+63856:M 14 May 2026 07:09:48.773 # Server initialized
+63856:M 14 May 2026 07:09:48.773 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+63856:M 14 May 2026 07:09:48.773 * Loading RDB produced by version 6.2.14
+63856:M 14 May 2026 07:09:48.773 * RDB memory usage when created 1.13 Mb
+63856:M 14 May 2026 07:09:48.776 # Wrong RDB checksum expected: (952f9b3e06246201) but got (2d1c9debb9f32c76). Aborting now.
+63856:M 14 May 2026 07:09:48.776 # Internal error in RDB reading offset 0, function at rdb.c:2726 -> RDB CRC error

@@ -1,0 +1,22 @@
+13435:C 14 May 2026 07:08:16.357 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+13435:C 14 May 2026 07:08:16.366 # Redis version=6.2.14, bits=64, commit=91863dd8, modified=1, pid=13435, just started
+13435:C 14 May 2026 07:08:16.374 # Configuration loaded
+13435:M 14 May 2026 07:08:16.381 * monotonic clock: POSIX clock_gettime
+13435:M 14 May 2026 07:08:16.389 * Running mode=standalone, port=51459.
+13435:M 14 May 2026 07:08:16.396 # Server initialized
+13435:M 14 May 2026 07:08:16.406 * Loading RDB produced by version 6.2.14
+13435:M 14 May 2026 07:08:16.414 * RDB age 907 seconds
+13435:M 14 May 2026 07:08:16.428 * RDB memory usage when created 1.13 Mb
+13435:M 14 May 2026 07:08:16.439 # Internal error in RDB reading offset 0, function at rdb.c:231 -> Unknown length encoding 2 in rdbLoadLen()
+66159:C 14 May 2026 07:15:43.280 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+66159:C 14 May 2026 07:15:43.286 # Redis version=6.2.14, bits=64, commit=91863dd8, modified=1, pid=66159, just started
+66159:C 14 May 2026 07:15:43.286 # Configuration loaded
+66159:M 14 May 2026 07:15:43.286 * monotonic clock: POSIX clock_gettime
+66159:M 14 May 2026 07:15:43.286 * Running mode=standalone, port=51795.
+66159:M 14 May 2026 07:15:43.286 # Server initialized
+66159:M 14 May 2026 07:15:43.286 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+66159:M 14 May 2026 07:15:43.287 * Loading RDB produced by version 6.2.14
+66159:M 14 May 2026 07:15:43.287 * RDB age 494 seconds
+66159:M 14 May 2026 07:15:43.287 * RDB memory usage when created 1.13 Mb
+66159:M 14 May 2026 07:15:43.288 # Short read or OOM loading DB. Unrecoverable error, aborting now.
+66159:M 14 May 2026 07:15:43.288 # Internal error in RDB reading offset 0, function at rdb.c:2750 -> Unexpected EOF reading RDB file

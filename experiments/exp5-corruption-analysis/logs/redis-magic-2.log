@@ -1,0 +1,26 @@
+7899:C 14 May 2026 06:42:38.009 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+7899:C 14 May 2026 06:42:38.024 # Redis version=6.2.14, bits=64, commit=91863dd8, modified=1, pid=7899, just started
+7899:C 14 May 2026 06:42:38.039 # Configuration loaded
+7899:M 14 May 2026 06:42:38.051 * monotonic clock: POSIX clock_gettime
+7899:M 14 May 2026 06:42:38.065 * Running mode=standalone, port=38645.
+7899:M 14 May 2026 06:42:38.075 # Server initialized
+7899:M 14 May 2026 06:42:38.089 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+7899:M 14 May 2026 06:42:38.103 # Can't handle RDB format version 0
+7899:M 14 May 2026 06:42:38.117 # Fatal error loading the DB: Invalid argument. Exiting.
+12808:C 14 May 2026 06:53:30.554 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+12808:C 14 May 2026 06:53:30.566 # Redis version=6.2.14, bits=64, commit=91863dd8, modified=1, pid=12808, just started
+12808:C 14 May 2026 06:53:30.577 # Configuration loaded
+12808:M 14 May 2026 06:53:30.588 * monotonic clock: POSIX clock_gettime
+12808:M 14 May 2026 06:53:30.598 * Running mode=standalone, port=55709.
+12808:M 14 May 2026 06:53:30.610 # Server initialized
+12808:M 14 May 2026 06:53:30.623 # Wrong signature trying to load DB from file
+12808:M 14 May 2026 06:53:30.631 # Fatal error loading the DB: Invalid argument. Exiting.
+63124:C 14 May 2026 07:07:58.116 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+63124:C 14 May 2026 07:07:58.119 # Redis version=6.2.14, bits=64, commit=91863dd8, modified=1, pid=63124, just started
+63124:C 14 May 2026 07:07:58.119 # Configuration loaded
+63124:M 14 May 2026 07:07:58.120 * monotonic clock: POSIX clock_gettime
+63124:M 14 May 2026 07:07:58.120 * Running mode=standalone, port=55607.
+63124:M 14 May 2026 07:07:58.120 # Server initialized
+63124:M 14 May 2026 07:07:58.120 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+63124:M 14 May 2026 07:07:58.121 # Can't handle RDB format version 0
+63124:M 14 May 2026 07:07:58.121 # Fatal error loading the DB: Invalid argument. Exiting.

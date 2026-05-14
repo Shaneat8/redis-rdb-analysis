@@ -1,0 +1,10 @@
+13540:C 14 May 2026 07:09:27.247 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+13540:C 14 May 2026 07:09:27.256 # Redis version=6.2.14, bits=64, commit=91863dd8, modified=1, pid=13540, just started
+13540:C 14 May 2026 07:09:27.262 # Configuration loaded
+13540:M 14 May 2026 07:09:27.271 * monotonic clock: POSIX clock_gettime
+13540:M 14 May 2026 07:09:27.278 * Running mode=standalone, port=56511.
+13540:M 14 May 2026 07:09:27.286 # Server initialized
+13540:M 14 May 2026 07:09:27.293 * Loading RDB produced by version 6.2.14
+13540:M 14 May 2026 07:09:27.312 * RDB age 978 seconds
+13540:M 14 May 2026 07:09:27.321 * RDB memory usage when created 1.13 Mb
+13540:M 14 May 2026 07:09:27.330 # Internal error in RDB reading offset 0, function at rdb.c:231 -> Unknown length encoding 2 in rdbLoadLen()

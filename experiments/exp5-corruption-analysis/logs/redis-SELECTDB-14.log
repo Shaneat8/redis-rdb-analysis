@@ -1,0 +1,10 @@
+13085:C 14 May 2026 07:00:09.172 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+13085:C 14 May 2026 07:00:09.182 # Redis version=6.2.14, bits=64, commit=91863dd8, modified=1, pid=13085, just started
+13085:C 14 May 2026 07:00:09.189 # Configuration loaded
+13085:M 14 May 2026 07:00:09.197 * monotonic clock: POSIX clock_gettime
+13085:M 14 May 2026 07:00:09.205 * Running mode=standalone, port=40389.
+13085:M 14 May 2026 07:00:09.212 # Server initialized
+13085:M 14 May 2026 07:00:09.221 * Loading RDB produced by version 6.2.14
+13085:M 14 May 2026 07:00:09.228 * RDB age 420 seconds
+13085:M 14 May 2026 07:00:09.237 * RDB memory usage when created 1.13 Mb
+13085:M 14 May 2026 07:00:09.246 # Internal error in RDB reading offset 0, function at rdb.c:2322 -> Unknown RDB encoding type 108

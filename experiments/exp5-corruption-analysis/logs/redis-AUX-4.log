@@ -1,0 +1,21 @@
+12934:C 14 May 2026 06:56:26.683 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+12934:C 14 May 2026 06:56:26.691 # Redis version=6.2.14, bits=64, commit=91863dd8, modified=1, pid=12934, just started
+12934:C 14 May 2026 06:56:26.699 # Configuration loaded
+12934:M 14 May 2026 06:56:26.706 * monotonic clock: POSIX clock_gettime
+12934:M 14 May 2026 06:56:26.714 * Running mode=standalone, port=60707.
+12934:M 14 May 2026 06:56:26.722 # Server initialized
+12934:M 14 May 2026 06:56:26.730 * Loading RDB produced by version 6.2.14
+12934:M 14 May 2026 06:56:26.738 * RDB memory usage when created 1.13 Mb
+12934:M 14 May 2026 06:56:26.746 # Wrong RDB checksum expected: (9426a317d492a5c6) but got (6bc6a491274e2ea8). Aborting now.
+12934:M 14 May 2026 06:56:26.766 # Internal error in RDB reading offset 0, function at rdb.c:2726 -> RDB CRC error
+63724:C 14 May 2026 07:09:31.972 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+63724:C 14 May 2026 07:09:31.978 # Redis version=6.2.14, bits=64, commit=91863dd8, modified=1, pid=63724, just started
+63724:C 14 May 2026 07:09:31.978 # Configuration loaded
+63724:M 14 May 2026 07:09:31.978 * monotonic clock: POSIX clock_gettime
+63724:M 14 May 2026 07:09:31.980 * Running mode=standalone, port=41203.
+63724:M 14 May 2026 07:09:31.980 # Server initialized
+63724:M 14 May 2026 07:09:31.980 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+63724:M 14 May 2026 07:09:31.980 * Loading RDB produced by version 6.2.14
+63724:M 14 May 2026 07:09:31.980 * RDB memory usage when created 1.13 Mb
+63724:M 14 May 2026 07:09:31.983 # Wrong RDB checksum expected: (2d6b5877e745af51) but got (2d1c9debb9f32c76). Aborting now.
+63724:M 14 May 2026 07:09:31.983 # Internal error in RDB reading offset 0, function at rdb.c:2726 -> RDB CRC error

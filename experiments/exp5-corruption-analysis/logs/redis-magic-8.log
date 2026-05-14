@@ -1,0 +1,17 @@
+12842:C 14 May 2026 06:54:15.099 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+12842:C 14 May 2026 06:54:15.106 # Redis version=6.2.14, bits=64, commit=91863dd8, modified=1, pid=12842, just started
+12842:C 14 May 2026 06:54:15.117 # Configuration loaded
+12842:M 14 May 2026 06:54:15.127 * monotonic clock: POSIX clock_gettime
+12842:M 14 May 2026 06:54:15.135 * Running mode=standalone, port=58263.
+12842:M 14 May 2026 06:54:15.145 # Server initialized
+12842:M 14 May 2026 06:54:15.154 # Can't handle RDB format version 0
+12842:M 14 May 2026 06:54:15.164 # Fatal error loading the DB: Invalid argument. Exiting.
+63418:C 14 May 2026 07:08:41.554 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+63418:C 14 May 2026 07:08:41.561 # Redis version=6.2.14, bits=64, commit=91863dd8, modified=1, pid=63418, just started
+63418:C 14 May 2026 07:08:41.561 # Configuration loaded
+63418:M 14 May 2026 07:08:41.561 * monotonic clock: POSIX clock_gettime
+63418:M 14 May 2026 07:08:41.562 * Running mode=standalone, port=46953.
+63418:M 14 May 2026 07:08:41.562 # Server initialized
+63418:M 14 May 2026 07:08:41.562 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+63418:M 14 May 2026 07:08:41.562 # Wrong signature trying to load DB from file
+63418:M 14 May 2026 07:08:41.563 # Fatal error loading the DB: Invalid argument. Exiting.

@@ -1,0 +1,23 @@
+13230:C 14 May 2026 07:03:26.910 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+13230:C 14 May 2026 07:03:26.923 # Redis version=6.2.14, bits=64, commit=91863dd8, modified=1, pid=13230, just started
+13230:C 14 May 2026 07:03:26.931 # Configuration loaded
+13230:M 14 May 2026 07:03:26.942 * monotonic clock: POSIX clock_gettime
+13230:M 14 May 2026 07:03:26.951 * Running mode=standalone, port=35945.
+13230:M 14 May 2026 07:03:26.960 # Server initialized
+13230:M 14 May 2026 07:03:26.973 * Loading RDB produced by version 6.2.14
+13230:M 14 May 2026 07:03:26.982 * RDB age 617 seconds
+13230:M 14 May 2026 07:03:26.993 * RDB memory usage when created 1.13 Mb
+13230:M 14 May 2026 07:03:27.002 # Internal error in RDB reading offset 0, function at rdb.c:531 -> Unknown RDB string encoding type 15
+13230:M 14 May 2026 07:03:27.022 # Terminating server after rdb file reading failure.
+65143:C 14 May 2026 07:13:08.490 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+65143:C 14 May 2026 07:13:08.500 # Redis version=6.2.14, bits=64, commit=91863dd8, modified=1, pid=65143, just started
+65143:C 14 May 2026 07:13:08.500 # Configuration loaded
+65143:M 14 May 2026 07:13:08.500 * monotonic clock: POSIX clock_gettime
+65143:M 14 May 2026 07:13:08.501 * Running mode=standalone, port=36917.
+65143:M 14 May 2026 07:13:08.501 # Server initialized
+65143:M 14 May 2026 07:13:08.501 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+65143:M 14 May 2026 07:13:08.501 * Loading RDB produced by version 6.2.14
+65143:M 14 May 2026 07:13:08.501 * RDB age 339 seconds
+65143:M 14 May 2026 07:13:08.501 * RDB memory usage when created 1.13 Mb
+65143:M 14 May 2026 07:13:08.501 # Internal error in RDB reading offset 0, function at rdb.c:1844 -> Ziplist integrity check failed.
+65143:M 14 May 2026 07:13:08.501 # Terminating server after rdb file reading failure.

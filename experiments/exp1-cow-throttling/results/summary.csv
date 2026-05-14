@@ -1,0 +1,4 @@
+label,throttle_bytes,throttle_delay_us,bgsave_seconds,peak_rss_gb,max_cow_mb,writes_throttled
+throttle OFF,0,200,2.826,0.293,275.702,0
+thr=341KB,350000,200,2.395,0.280,6.238,995
+thr=683KB,700000,200,3.125,0.286,4.985,1270

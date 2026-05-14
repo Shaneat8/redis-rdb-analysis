@@ -1,0 +1,11 @@
+13390:C 14 May 2026 07:07:21.998 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+13390:C 14 May 2026 07:07:22.008 # Redis version=6.2.14, bits=64, commit=91863dd8, modified=1, pid=13390, just started
+13390:C 14 May 2026 07:07:22.016 # Configuration loaded
+13390:M 14 May 2026 07:07:22.023 * monotonic clock: POSIX clock_gettime
+13390:M 14 May 2026 07:07:22.030 * Running mode=standalone, port=35445.
+13390:M 14 May 2026 07:07:22.037 # Server initialized
+13390:M 14 May 2026 07:07:22.044 * Loading RDB produced by version 6.2.14
+13390:M 14 May 2026 07:07:22.051 * RDB age 853 seconds
+13390:M 14 May 2026 07:07:22.058 * RDB memory usage when created 1.13 Mb
+13390:M 14 May 2026 07:07:22.065 # Internal error in RDB reading offset 0, function at rdb.c:531 -> Unknown RDB string encoding type 35
+13390:M 14 May 2026 07:07:22.073 # Terminating server after rdb file reading failure.

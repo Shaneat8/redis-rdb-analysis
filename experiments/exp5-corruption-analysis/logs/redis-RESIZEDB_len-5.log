@@ -1,0 +1,23 @@
+13140:C 14 May 2026 07:01:16.131 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+13140:C 14 May 2026 07:01:16.140 # Redis version=6.2.14, bits=64, commit=91863dd8, modified=1, pid=13140, just started
+13140:C 14 May 2026 07:01:16.147 # Configuration loaded
+13140:M 14 May 2026 07:01:16.155 * monotonic clock: POSIX clock_gettime
+13140:M 14 May 2026 07:01:16.162 * Running mode=standalone, port=45329.
+13140:M 14 May 2026 07:01:16.170 # Server initialized
+13140:M 14 May 2026 07:01:16.178 * Loading RDB produced by version 6.2.14
+13140:M 14 May 2026 07:01:16.185 * RDB age 487 seconds
+13140:M 14 May 2026 07:01:16.194 * RDB memory usage when created 1.13 Mb
+13140:M 14 May 2026 07:01:16.202 # Wrong RDB checksum expected: (3fc2e605f82e1907) but got (6bc6a491274e2ea8). Aborting now.
+13140:M 14 May 2026 07:01:16.222 # Internal error in RDB reading offset 0, function at rdb.c:2726 -> RDB CRC error
+64750:C 14 May 2026 07:12:09.597 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+64750:C 14 May 2026 07:12:09.603 # Redis version=6.2.14, bits=64, commit=91863dd8, modified=1, pid=64750, just started
+64750:C 14 May 2026 07:12:09.603 # Configuration loaded
+64750:M 14 May 2026 07:12:09.604 * monotonic clock: POSIX clock_gettime
+64750:M 14 May 2026 07:12:09.606 * Running mode=standalone, port=34147.
+64750:M 14 May 2026 07:12:09.606 # Server initialized
+64750:M 14 May 2026 07:12:09.606 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+64750:M 14 May 2026 07:12:09.606 * Loading RDB produced by version 6.2.14
+64750:M 14 May 2026 07:12:09.606 * RDB age 280 seconds
+64750:M 14 May 2026 07:12:09.606 * RDB memory usage when created 1.13 Mb
+64750:M 14 May 2026 07:12:09.606 # Internal error in RDB reading offset 0, function at rdb.c:1689 -> Duplicate zset fields detected
+64750:M 14 May 2026 07:12:09.606 # Terminating server after rdb file reading failure.

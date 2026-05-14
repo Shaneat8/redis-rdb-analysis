@@ -1,0 +1,11 @@
+13365:C 14 May 2026 07:06:39.360 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+13365:C 14 May 2026 07:06:39.367 # Redis version=6.2.14, bits=64, commit=91863dd8, modified=1, pid=13365, just started
+13365:C 14 May 2026 07:06:39.375 # Configuration loaded
+13365:M 14 May 2026 07:06:39.382 * monotonic clock: POSIX clock_gettime
+13365:M 14 May 2026 07:06:39.390 * Running mode=standalone, port=54765.
+13365:M 14 May 2026 07:06:39.397 # Server initialized
+13365:M 14 May 2026 07:06:39.404 * Loading RDB produced by version 6.2.14
+13365:M 14 May 2026 07:06:39.411 * RDB age 810 seconds
+13365:M 14 May 2026 07:06:39.419 * RDB memory usage when created 1.13 Mb
+13365:M 14 May 2026 07:06:39.426 # Internal error in RDB reading offset 0, function at rdb.c:1844 -> Ziplist integrity check failed.
+13365:M 14 May 2026 07:06:39.447 # Terminating server after rdb file reading failure.

@@ -1,0 +1,115 @@
+diff --git a/src/server.h b/src/server.h
+--- a/src/server.h
++++ b/src/server.h
+@@ -1370,6 +1370,11 @@ struct redisServer {
+     /* ... existing persistence fields ... */
+     int rdb_save_incremental_fsync;
+     int rdb_key_save_delay;
++    /* === CoW write throttling during BGSAVE === */
++    size_t       bgsave_cow_throttle_bytes;       /* threshold; 0 = disabled */
++    unsigned int bgsave_cow_throttle_delay_us;    /* delay per write when over */
++    size_t       stat_bgsave_cow_observed_bytes;  /* last sampled Private_Dirty */
++    long long    stat_bgsave_writes_throttled;    /* cumulative throttled writes */
+     /* ... rest of struct ... */
+ };
+diff --git a/src/server.c b/src/server.c
+--- a/src/server.c
++++ b/src/server.c
+@@ -50,6 +50,30 @@
+ /* ============== includes / globals unchanged above ============== */
+
++/* === CoW throttling helper ============================================
++ * Read Private_Dirty from /proc/self/smaps_rollup. Returns bytes.
++ * Returns 0 on parse failure — caller treats that as "no data" and
++ * keeps the throttle inactive. Linux-only. */
++static size_t cowSampleSmapsRollup(void) {
++    FILE *fp = fopen("/proc/self/smaps_rollup", "r");
++    if (!fp) return 0;
++    char line[256];
++    size_t private_dirty_kb = 0;
++    while (fgets(line, sizeof(line), fp)) {
++        if (strncmp(line, "Private_Dirty:", 14) == 0) {
++            sscanf(line + 14, " %zu kB", &private_dirty_kb);
++            break;
++        }
++    }
++    fclose(fp);
++    return private_dirty_kb * 1024;
++}
++/* ===================================================================== */
++
+ /* ============== existing initServerConfig() ============== */
+ void initServerConfig(void) {
+     /* ... existing init code ... */
++    server.bgsave_cow_throttle_bytes = 0;            /* off by default */
++    server.bgsave_cow_throttle_delay_us = 200;
++    server.stat_bgsave_cow_observed_bytes = 0;
++    server.stat_bgsave_writes_throttled = 0;
+ }
+@@ -1700,6 +1724,13 @@ int serverCron(struct aeEventLoop *eventLoop, long long id, void *clientData) {
+     /* ... existing cron body ... */
+
++    /* CoW pressure sampling during active BGSAVE. */
++    run_with_period(100) {
++        if (server.child_type == CHILD_TYPE_RDB) {
++            server.stat_bgsave_cow_observed_bytes = cowSampleSmapsRollup();
++        }
++    }
++
+     /* ... rest of cron unchanged ... */
+     return 1000/server.hz;
+ }
+@@ -3500,6 +3531,18 @@ int processCommand(client *c) {
+     /* ... existing auth, ACL, command lookup checks ... */
+
++    /* === CoW write throttling ===
++     * Slow writes when BGSAVE has duplicated too many pages already.
++     * Reads pass through unaffected. */
++    if (server.child_type == CHILD_TYPE_RDB &&
++        server.bgsave_cow_throttle_bytes > 0 &&
++        (c->cmd->flags & CMD_WRITE) &&
++        server.stat_bgsave_cow_observed_bytes > server.bgsave_cow_throttle_bytes)
++    {
++        usleep(server.bgsave_cow_throttle_delay_us);
++        server.stat_bgsave_writes_throttled++;
++    }
++
+     /* ... existing call(c, CMD_CALL_FULL); ... */
+     return C_OK;
+ }
+@@ -5050,6 +5093,14 @@ sds genRedisInfoString(const char *section) {
+     /* === existing persistence section === */
+     if (allsections || defsections || !strcasecmp(section,"persistence")) {
+         /* ... existing rdb_* and aof_* lines ... */
++        info = sdscatprintf(info,
++            "bgsave_cow_observed_bytes:%zu\r\n"
++            "bgsave_cow_throttle_bytes:%zu\r\n"
++            "bgsave_cow_throttle_delay_us:%u\r\n"
++            "bgsave_writes_throttled:%lld\r\n",
++            server.stat_bgsave_cow_observed_bytes,
++            server.bgsave_cow_throttle_bytes,
++            server.bgsave_cow_throttle_delay_us,
++            server.stat_bgsave_writes_throttled);
+     }
+diff --git a/src/rdb.c b/src/rdb.c
+--- a/src/rdb.c
++++ b/src/rdb.c
+@@ -3300,6 +3300,8 @@ void backgroundSaveDoneHandlerDisk(int exitcode, int bysignal) {
+     /* ... existing reap and stat update ... */
++    /* Reset CoW observation now that BGSAVE has ended. */
++    server.stat_bgsave_cow_observed_bytes = 0;
+ }
+diff --git a/src/config.c b/src/config.c
+--- a/src/config.c
++++ b/src/config.c
+@@ -2470,6 +2470,12 @@ standardConfig configs[] = {
+     /* === existing rdb-* config registrations === */
+     createIntConfig("rdb-key-save-delay", NULL, MODIFIABLE_CONFIG, INT_MIN, INT_MAX, server.rdb_key_save_delay, 0, INTEGER_CONFIG, NULL, NULL),
++
++    /* === CoW write throttling === */
++    createSizeTConfig("bgsave-cow-throttle-bytes",    NULL, MODIFIABLE_CONFIG, 0, SIZE_MAX, server.bgsave_cow_throttle_bytes,    0,   MEMORY_CONFIG,  NULL, NULL),
++    createIntConfig  ("bgsave-cow-throttle-delay-us", NULL, MODIFIABLE_CONFIG, 0, 1000000, server.bgsave_cow_throttle_delay_us, 200, INTEGER_CONFIG, NULL, NULL),
++
+     /* ... rest of table ... */
+     {NULL}
+ };

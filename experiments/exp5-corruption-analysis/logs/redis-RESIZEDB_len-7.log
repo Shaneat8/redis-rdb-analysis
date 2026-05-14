@@ -1,0 +1,21 @@
+13150:C 14 May 2026 07:01:28.788 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+13150:C 14 May 2026 07:01:28.798 # Redis version=6.2.14, bits=64, commit=91863dd8, modified=1, pid=13150, just started
+13150:C 14 May 2026 07:01:28.806 # Configuration loaded
+13150:M 14 May 2026 07:01:28.814 * monotonic clock: POSIX clock_gettime
+13150:M 14 May 2026 07:01:28.825 * Running mode=standalone, port=37825.
+13150:M 14 May 2026 07:01:28.837 # Server initialized
+13150:M 14 May 2026 07:01:28.846 * Loading RDB produced by version 6.2.14
+13150:M 14 May 2026 07:01:28.857 * RDB age 499 seconds
+13150:M 14 May 2026 07:01:28.867 * RDB memory usage when created 1.13 Mb
+13150:M 14 May 2026 07:01:28.875 # Internal error in RDB reading offset 0, function at rdb.c:2322 -> Unknown RDB encoding type 227
+64842:C 14 May 2026 07:12:21.942 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+64842:C 14 May 2026 07:12:21.944 # Redis version=6.2.14, bits=64, commit=91863dd8, modified=1, pid=64842, just started
+64842:C 14 May 2026 07:12:21.944 # Configuration loaded
+64842:M 14 May 2026 07:12:21.945 * monotonic clock: POSIX clock_gettime
+64842:M 14 May 2026 07:12:21.945 * Running mode=standalone, port=55229.
+64842:M 14 May 2026 07:12:21.945 # Server initialized
+64842:M 14 May 2026 07:12:21.945 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+64842:M 14 May 2026 07:12:21.945 * Loading RDB produced by version 6.2.14
+64842:M 14 May 2026 07:12:21.945 * RDB age 292 seconds
+64842:M 14 May 2026 07:12:21.945 * RDB memory usage when created 1.13 Mb
+64842:M 14 May 2026 07:12:21.945 # Internal error in RDB reading offset 0, function at rdb.c:2322 -> Unknown RDB encoding type 27

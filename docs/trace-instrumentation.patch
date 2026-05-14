@@ -1,0 +1,156 @@
+diff --git a/src/rdb.c b/src/rdb.c
+--- a/src/rdb.c
++++ b/src/rdb.c
+@@ -1,6 +1,8 @@
+ /*
+  * Copyright (c) 2009-Present, Redis Ltd.
+  * ...
+  */
+
+ #include "server.h"
++#include <stdarg.h>
++#include <time.h>
+@@
+ /* ------------------------- TRACE instrumentation -------------------------
+  * Added by redis-rdb-analysis. Foundation observability layer for the RDB
+  * write path. Never alters control flow; only logs structured events.
+  * --------------------------------------------------------------------- */
++int TRACE_ENABLED = 1;
++
++void rdbTrace(const char *event, const char *fmt, ...) {
++    if (!TRACE_ENABLED) return;
++
++    FILE *fp = fopen("/tmp/rdb_trace.log", "a");
++    if (!fp) return;
++
++    struct timespec ts;
++    clock_gettime(CLOCK_REALTIME, &ts);
++    fprintf(fp, "[%ld.%09ld] [%s] ", (long)ts.tv_sec, ts.tv_nsec, event);
++
++    va_list args;
++    va_start(args, fmt);
++    vfprintf(fp, fmt, args);
++    va_end(args);
++
++    fprintf(fp, "\n");
++    fclose(fp);
++}
++
++#define TRACE(event, fmt, ...) \
++    rdbTrace(event, fmt, ##__VA_ARGS__)
++
+ /* ------------------------- end TRACE instrumentation ------------------ */
+
+@@  /* in rdbSaveInternal() — around the file open and rdbSaveRio call */
+ static int rdbSaveInternal(int req, const char *filename, rdbSaveInfo *rsi, int rdbflags) {
++    TRACE("START", "rdbSaveInternal started: file=%s", filename);
+     rio rdb;
+     int error = 0;
+     FILE *fp = fopen(filename, "w");
+     if (!fp) {
++        TRACE("ERROR", "fopen failed: %s", strerror(errno));
+         return C_ERR;
+     }
+     rioInitWithFile(&rdb, fp);
+
++    TRACE("FLOW", "Calling rdbSaveRio");
+     if (rdbSaveRio(req, &rdb, &error, rdbflags, rsi) == C_ERR) {
++        TRACE("ERROR", "rdbSaveRio returned C_ERR");
+         errno = error;
+         fclose(fp);
+         return C_ERR;
+     }
++    TRACE("END", "rdbSaveInternal finished");
+
+     if (fflush(fp)) goto werr;
+     if (fsync(fileno(fp))) goto werr;
++    TRACE("FILE", "Closing RDB file");
+     if (fclose(fp)) { fp = NULL; goto werr; }
+     return C_OK;
+@@  /* in rdbSaveRio() — around header, AUX, per-DB loop, EOF, checksum */
+ int rdbSaveRio(int req, rio *rdb, int *error, int rdbflags, rdbSaveInfo *rsi) {
++    TRACE("FLOW", "Entered rdbSaveRio");
+     /* ... existing magic header write ... */
++    TRACE("HEADER", "Writing RDB header version: %d", RDB_VERSION);
+
+     /* ... existing AUX field writes ... */
++    TRACE("AUX", "Writing AUX fields");
+
++    TRACE("MODULE", "Saving module AUX (before RDB)");
+     /* ... existing module aux ... */
+
++    TRACE("FUNC", "Saving functions");
+     /* ... existing function save ... */
+
+     for (j = 0; j < server.dbnum; j++) {
++        TRACE("DB", "Saving DB %d", j);
+         long key_counter_db = 0;
+         if (rdbSaveDb(req, rdb, j, rdbflags, &key_counter_db, &skipped) == C_ERR)
+             goto werr;
++        TRACE("DB_DONE", "DB %d done, keys saved in this DB: %ld", j, key_counter_db);
+         total_keys += key_counter_db;
+     }
+
++    TRACE("MODULE", "Saving module AUX (after RDB)");
+     /* ... existing module aux after ... */
+
++    TRACE("EOF", "Writing EOF opcode");
+     if (rdbSaveType(rdb, RDB_OPCODE_EOF) == -1) goto werr;
+
++    TRACE("CHECKSUM", "Writing checksum");
+     cksum = rdb->cksum;
+     memrev64ifbe(&cksum);
+     if (rioWrite(rdb, &cksum, 8) == 0) goto werr;
+
++    TRACE("SUCCESS", "RDB save complete: keys=%ld skipped=%llu bytes=%zu",
++          total_keys, (unsigned long long)skipped, rdb->processed_bytes);
+     return C_OK;
+
+ werr:
++    TRACE("ERROR", "Error during rdbSaveRio");
+     return C_ERR;
+ }
+
+@@  /* in rdbSaveDb() — around DB entry, SELECTDB, per-key save, DB done */
+ int rdbSaveDb(int req, rio *rdb, int dbid, int rdbflags,
+               long *key_counter, unsigned long long *skipped) {
+     redisDb *db = server.db + dbid;
+     unsigned long long db_size = dbSize(db);
+     unsigned long long expires_size = dictSize(db->expires);
+
+     if (db_size == 0) {
++        TRACE("DB", "Skipping empty DB %d", dbid);
+         return C_OK;
+     }
++    TRACE("DB", "Entering DB %d (keys=%llu)", dbid, db_size);
+
++    TRACE("DB_META", "Writing SELECTDB for DB %d", dbid);
+     if (rdbSaveType(rdb, RDB_OPCODE_SELECTDB) == -1) return C_ERR;
+     if (rdbSaveLen(rdb, dbid) == -1) return C_ERR;
+
++    TRACE("DB_META", "DB %d sizes: keys=%llu expires=%llu", dbid, db_size, expires_size);
+     if (rdbSaveType(rdb, RDB_OPCODE_RESIZEDB) == -1) return C_ERR;
+     if (rdbSaveLen(rdb, db_size) == -1) return C_ERR;
+     if (rdbSaveLen(rdb, expires_size) == -1) return C_ERR;
+
+     /* ... existing kvstoreIterator loop ... */
+     while ((de = kvstoreIteratorNext(&kvs_it)) != NULL) {
++        if (server.cluster_enabled && /* slot trimmed */ 0) {
++            TRACE("SKIP", "Skipped key in slot %d", curr_slot);
++            (*skipped)++;
++            continue;
++        }
++        TRACE("KEY", "Saving key in DB %d", dbid);
+         size_t rdb_bytes_before_key = rdb->processed_bytes;
+         /* ... existing rdbSaveKeyValuePair ... */
+         size_t dump_size = rdb->processed_bytes - rdb_bytes_before_key;
++        TRACE("KEY_DONE", "Key saved (bytes=%zu)", dump_size);
+         (*key_counter)++;
+         if ((*key_counter) % 1024 == 0) {
++            TRACE("PROGRESS", "Saved %ld keys so far", *key_counter);
+         }
+     }
+
++    TRACE("DB_DONE", "Completed DB %d", dbid);
+     return C_OK;
+ }

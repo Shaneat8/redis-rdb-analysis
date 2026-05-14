@@ -1,0 +1,11 @@
+13655:C 14 May 2026 07:12:15.421 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+13655:C 14 May 2026 07:12:15.430 # Redis version=6.2.14, bits=64, commit=91863dd8, modified=1, pid=13655, just started
+13655:C 14 May 2026 07:12:15.438 # Configuration loaded
+13655:M 14 May 2026 07:12:15.445 * monotonic clock: POSIX clock_gettime
+13655:M 14 May 2026 07:12:15.452 * Running mode=standalone, port=51759.
+13655:M 14 May 2026 07:12:15.459 # Server initialized
+13655:M 14 May 2026 07:12:15.467 * Loading RDB produced by version 6.2.14
+13655:M 14 May 2026 07:12:15.474 * RDB age 1146 seconds
+13655:M 14 May 2026 07:12:15.481 * RDB memory usage when created 1.13 Mb
+13655:M 14 May 2026 07:12:15.488 # Wrong RDB checksum expected: (6bc6a491274e2ea8) but got (6bf5a491274e2ea8). Aborting now.
+13655:M 14 May 2026 07:12:15.507 # Internal error in RDB reading offset 0, function at rdb.c:2726 -> RDB CRC error
